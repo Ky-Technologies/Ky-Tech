@@ -1,0 +1,733 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Packs – Kytech</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Courier+Prime:ital,wght@0,400;0,700;1,400&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="style.css" />
+  <style>
+    /* ── FILTROS INTERACTIVOS ── */
+    .packs-filter-wrap {
+      display: flex; justify-content: center; margin-bottom: 28px;
+    }
+    .packs-filter-bar {
+      display: inline-flex; background: rgba(8, 29, 52, 0.08);
+      padding: 6px; border-radius: 50px; border: 1px solid var(--border);
+      gap: 6px; flex-wrap: wrap; justify-content: center;
+    }
+    .filter-tab {
+      background: transparent; border: none; padding: 10px 22px;
+      border-radius: 40px; font-family: var(--font-body); font-size: .85rem;
+      font-weight: 600; color: var(--muted); cursor: pointer;
+      transition: all .22s ease;
+    }
+    .filter-tab:hover { color: var(--dark); background: rgba(255,255,255,.6); }
+    .filter-tab.active {
+      background: var(--bg-dark); color: var(--white);
+      box-shadow: 0 4px 12px rgba(8, 29, 52, 0.2);
+    }
+
+    /* ── ASISTENTE RECOMENDADOR RÁPIDO ── */
+    .advisor-box {
+      background: linear-gradient(135deg, rgba(8,29,52,.96) 0%, rgba(4,16,30,.98) 100%);
+      border: 1px solid rgba(56, 189, 248, 0.28);
+      border-radius: var(--radius-xl); padding: 28px 32px;
+      margin-bottom: 40px; box-shadow: var(--shadow-lg);
+      position: relative; overflow: hidden;
+    }
+    .advisor-header {
+      display: flex; align-items: center; justify-content: space-between;
+      gap: 16px; margin-bottom: 18px; flex-wrap: wrap;
+    }
+    .advisor-title {
+      display: flex; align-items: center; gap: 10px;
+      color: var(--white); font-size: 1.1rem; font-weight: 700;
+      font-family: var(--font-body);
+    }
+    .advisor-badge {
+      background: rgba(56,189,248,.18); color: var(--accent-light);
+      border: 1px solid rgba(56,189,248,.35); padding: 4px 12px;
+      border-radius: 20px; font-size: .72rem; font-weight: 700; text-transform: uppercase;
+    }
+    .advisor-desc { color: #b3d4f0; font-size: .9rem; margin-bottom: 18px; }
+    .advisor-options {
+      display: flex; gap: 10px; flex-wrap: wrap;
+    }
+    .advisor-btn {
+      background: rgba(255,255,255,.07); border: 1px solid rgba(125,212,252,.2);
+      color: var(--white); padding: 10px 18px; border-radius: var(--radius);
+      font-size: .84rem; font-weight: 500; cursor: pointer;
+      display: flex; align-items: center; gap: 8px;
+      transition: all .2s ease;
+    }
+    .advisor-btn:hover, .advisor-btn.selected {
+      background: var(--accent); border-color: var(--accent-light);
+      color: var(--white); transform: translateY(-2px);
+      box-shadow: 0 4px 16px var(--accent-glow);
+    }
+    .advisor-result {
+      margin-top: 18px; padding-top: 16px; border-top: 1px solid rgba(125,212,252,.15);
+      color: #7dd4fc; font-size: .88rem; display: none;
+      align-items: center; gap: 8px;
+    }
+    .advisor-result.show { display: flex; animation: fadeIn .3s ease; }
+
+    /* ── PACKS GRID & CARDS ── */
+    .packs-grid { display: grid; grid-template-columns: repeat(2,1fr); gap: 24px; margin-top: 10px; }
+    .pack-card {
+      background: var(--surface); border: 1px solid var(--border);
+      border-radius: var(--radius-xl); padding: 34px;
+      display: flex; flex-direction: column;
+      box-shadow: var(--shadow);
+      transition: transform .28s cubic-bezier(.4,0,.2,1), box-shadow .28s ease, border-color .28s ease;
+      position: relative; overflow: hidden;
+    }
+    .pack-card:hover { transform: translateY(-6px); box-shadow: var(--shadow-lg); }
+    .pack-card.featured {
+      border-top: 4px solid var(--accent);
+      border-color: rgba(2,132,199,.35);
+      background: linear-gradient(180deg, #ffffff 0%, #f4f9fd 100%);
+    }
+    .pack-card.dark-featured {
+      background: linear-gradient(135deg, #081d34 0%, #04101e 100%);
+      border: 1px solid rgba(56,189,248,.25);
+      border-top: 4px solid var(--accent-light);
+    }
+    
+    /* Highlight animación cuando es recomendado */
+    .pack-card.pack-highlight {
+      animation: pulseHighlight 2.5s infinite;
+      border-color: var(--accent-light) !important;
+    }
+    @keyframes pulseHighlight {
+      0%, 100% { box-shadow: 0 0 0 0 rgba(56, 189, 248, 0.4); }
+      50% { box-shadow: 0 0 25px 4px rgba(56, 189, 248, 0.35); }
+    }
+
+    .pack-badge {
+      position: absolute; top: 22px; right: 22px;
+      background: linear-gradient(135deg, var(--accent) 0%, #0284c7 100%);
+      color: var(--white); font-size: .68rem; font-weight: 700;
+      padding: 5px 12px; border-radius: 20px;
+      letter-spacing: .08em; text-transform: uppercase;
+      box-shadow: 0 2px 10px var(--accent-glow);
+    }
+    .pack-num {
+      font-family: var(--font-head); font-size: .78rem; font-weight: 700;
+      letter-spacing: .15em; text-transform: uppercase;
+      color: var(--muted); margin-bottom: 8px;
+    }
+    .dark-featured .pack-num { color: #7aacc9; }
+    .pack-name { font-family: var(--font-head); font-size: 1.45rem; font-weight: 700; margin-bottom: 8px; color: var(--dark); letter-spacing: .02em; }
+    .dark-featured .pack-name { color: var(--white); }
+    .pack-tagline { color: var(--muted); font-size: .92rem; margin-bottom: 22px; line-height: 1.5; }
+    .dark-featured .pack-tagline { color: #b3d4f0; }
+    .pack-divider { height: 1px; background: var(--border); margin-bottom: 20px; }
+    .dark-featured .pack-divider { background: rgba(125,212,252,.15); }
+    .pack-includes { font-size: .76rem; font-weight: 700; color: var(--muted); letter-spacing: .1em; text-transform: uppercase; margin-bottom: 14px; }
+    .dark-featured .pack-includes { color: #7dd4fc; }
+    
+    .pack-list { list-style: none; display: flex; flex-direction: column; gap: 11px; flex: 1; }
+    .pack-list li { display: flex; align-items: flex-start; gap: 12px; font-size: .92rem; color: var(--text); }
+    .dark-featured .pack-list li { color: #cbe3f7; }
+    .pack-list li::before {
+      content: '✓'; color: var(--accent); font-weight: 800; font-size: 1rem;
+      flex-shrink: 0; margin-top: 1px;
+    }
+    .dark-featured .pack-list li::before { color: var(--accent-light); }
+
+    /* Desglose colapsable */
+    .pack-details-btn {
+      background: none; border: none; color: var(--accent);
+      font-size: .83rem; font-weight: 600; cursor: pointer;
+      display: inline-flex; align-items: center; gap: 6px;
+      margin-top: 14px; padding: 6px 0; text-decoration: underline;
+    }
+    .dark-featured .pack-details-btn { color: var(--accent-light); }
+    .pack-details-content {
+      display: none; margin-top: 12px; padding: 14px;
+      background: rgba(2,132,199,.06); border-radius: var(--radius);
+      font-size: .82rem; color: var(--muted); line-height: 1.6;
+    }
+    .dark-featured .pack-details-content {
+      background: rgba(255,255,255,.05); color: #a8c8e8;
+    }
+    .pack-details-content.open { display: block; animation: fadeIn .2s ease; }
+
+    /* CTAs del pack */
+    .pack-cta { margin-top: 26px; display: flex; flex-direction: column; gap: 10px; }
+    .pack-cta .btn { width: 100%; justify-content: center; letter-spacing: .03em; }
+    .btn-wa-direct {
+      background: #25d366; color: #fff; font-weight: 600;
+      border: none; display: inline-flex; align-items: center; justify-content: center;
+      gap: 8px; padding: 12px 20px; border-radius: var(--radius);
+      text-decoration: none; font-size: .88rem; transition: all .2s ease;
+      box-shadow: 0 4px 14px rgba(37,211,102,.3);
+    }
+    .btn-wa-direct:hover {
+      background: #20bd5a; transform: translateY(-2px);
+      box-shadow: 0 6px 20px rgba(37,211,102,.45); color: #fff;
+    }
+
+    /* Tabla comparativa */
+    .table-toggle-wrap { text-align: center; margin: 50px 0 20px; }
+    .comparison-table-wrap {
+      background: var(--surface); border: 1px solid var(--border);
+      border-radius: var(--radius-xl); overflow-x: auto;
+      box-shadow: var(--shadow); margin-top: 24px; display: none;
+    }
+    .comparison-table-wrap.open { display: block; animation: fadeIn .3s ease; }
+    .comp-table { width: 100%; border-collapse: collapse; text-align: left; font-size: .88rem; }
+    .comp-table th, .comp-table td { padding: 16px 20px; border-bottom: 1px solid var(--border); }
+    .comp-table th { background: var(--bg-dark); color: var(--white); font-family: var(--font-head); font-size: .88rem; }
+    .comp-table tr:hover td { background: rgba(2,132,199,.04); }
+    .comp-check { color: #22c55e; font-weight: 700; font-size: 1.1rem; text-align: center; }
+    .comp-dash { color: #cbd5e1; text-align: center; }
+
+    @media (max-width: 860px) { 
+      .packs-grid { grid-template-columns: 1fr; } 
+      .advisor-box { padding: 22px 18px; }
+      .advisor-options { flex-direction: column; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- LOGO BANNER -->
+<div class="logo-banner">
+  <a href="index.html"><img src="Baner.png" alt="Kytech Banner"></a>
+</div>
+
+<!-- NAV -->
+<nav id="mainNav">
+  <div class="container">
+    <div class="nav-inner">
+      <a href="index.html" class="logo-img">
+        <img src="Logo_KyTech.jpg" alt="Kytech">
+      </a>
+      <ul class="nav-links">
+        <li><a href="index.html">Inicio</a></li>
+        <li><a href="servicios.html">Servicios</a></li>
+        <li><a href="packs.html" class="active">Packs</a></li>
+        <li><a href="tienda.html">Tienda</a></li>
+        <li><a href="como.html">Cómo trabajamos</a></li>
+        <li><a href="contacto.html">Contacto</a></li>
+      </ul>
+      <div class="nav-cta">
+        <a href="contacto.html" class="btn btn-primary" style="padding:9px 20px;font-size:.82rem;letter-spacing:.06em;">Consultar →</a>
+        <button class="hamburger" id="hamburger" aria-label="Abrir menú"><span></span><span></span><span></span></button>
+      </div>
+    </div>
+  </div>
+</nav>
+<div class="mobile-menu" id="mobile-menu">
+  <a href="index.html" class="logo-img" style="margin-bottom:8px;"><img src="Logo_KyTech.jpg" alt="Kytech" style="height:32px;filter:brightness(0) invert(1);"></a>
+  <a href="index.html">Inicio</a>
+  <a href="servicios.html">Servicios</a>
+  <a href="packs.html" class="active">Packs</a>
+  <a href="tienda.html">Tienda</a>
+  <a href="como.html">Cómo trabajamos</a>
+  <a href="contacto.html">Contacto</a>
+  <a href="contacto.html" class="btn btn-primary">Iniciar consulta →</a>
+</div>
+
+<div class="page-header">
+  <div class="container">
+    <div class="tag">Packs de servicios</div>
+    <h1>Soluciones integrales <em>adecuadas a su etapa</em></h1>
+    <p>Paquetes preconfigurados diseñados para iniciar, potenciar o equipar las operaciones de su empresa. Implementación completa llave en mano.</p>
+  </div>
+</div>
+
+<section class="section">
+  <div class="container">
+
+    <!-- ASISTENTE INTERACTIVO DE RECOMENDACIÓN -->
+    <div class="advisor-box fade-in">
+      <div class="advisor-header">
+        <div class="advisor-title">
+          <span>🎯</span>
+          <span>¿Dudas sobre cuál elegir? Encuentre su pack ideal en un clic:</span>
+        </div>
+        <span class="advisor-badge">Asistente Rápido</span>
+      </div>
+      <p class="advisor-desc">Indíquenos qué necesita su empresa hoy y le resaltaremos la opción perfecta:</p>
+      <div class="advisor-options">
+        <button class="advisor-btn" onclick="selectAdvisor('pack1')">
+          <span>🌐</span> Quiero mi dominio propio y correos corporativos
+        </button>
+        <button class="advisor-btn" onclick="selectAdvisor('pack2')">
+          <span>🚀</span> Necesito sitio web profesional + redes activas
+        </button>
+        <button class="advisor-btn" onclick="selectAdvisor('pack3')">
+          <span>📈</span> Ya tengo web, busco clientes y publicidad (Ads)
+        </button>
+        <button class="advisor-btn" onclick="selectAdvisor('pack4')">
+          <span>📱</span> Solución completa 360° + iPhone incluido
+        </button>
+      </div>
+      <div class="advisor-result" id="advisorResult">
+        <span>✨</span> <strong id="advisorText"></strong>
+      </div>
+    </div>
+
+    <!-- FILTROS POR CATEGORÍA -->
+    <div class="packs-filter-wrap fade-in">
+      <div class="packs-filter-bar">
+        <button class="filter-tab active" onclick="filterPacks('all', this)">Todos los Packs (4)</button>
+        <button class="filter-tab" onclick="filterPacks('inicial', this)">Fase Inicial / Emprendedores</button>
+        <button class="filter-tab" onclick="filterPacks('escala', this)">Crecimiento & Hardware</button>
+      </div>
+    </div>
+
+    <!-- PACKS GRID INTERACTIVO -->
+    <div class="packs-grid">
+
+      <!-- PACK 01 -->
+      <div class="pack-card fade-in" id="pack1" data-cat="inicial">
+        <div class="pack-num">Pack 01</div>
+        <div class="pack-name">Inicio Digital</div>
+        <div class="pack-tagline">Infraestructura base para profesionalizar su identidad y canales</div>
+        <div class="pack-divider"></div>
+        <div class="pack-includes">Servicios incluidos</div>
+        <ul class="pack-list">
+          <li>Registro de dominio propio (.com / .com.ar) por 1 año</li>
+          <li>Correo corporativo profesional (Google Workspace / MS 365)</li>
+          <li>WhatsApp Business configurado con catálogo inicial</li>
+          <li>Firma digital de correo corporativa</li>
+        </ul>
+        <button class="pack-details-btn" onclick="toggleDetails('details-1')">
+          <span>▾ Ver detalles técnicos</span>
+        </button>
+        <div class="pack-details-content" id="details-1">
+          • Gestión de DNS, registros MX, SPF y DKIM para entrega óptima.<br>
+          • Configuración de respuestas automáticas y mensajes de bienvenida en WhatsApp.<br>
+          • Soporte de puesta en marcha durante 30 días.
+        </div>
+        <div class="pack-cta">
+          <a href="https://wa.me/5491136682292?text=Hola%20Kytech%2C%20me%20interesa%20contratar%20el%20Pack%2001%20(Inicio%20Digital).%20%C2%BFPodr%C3%ADan%20asesorarme%3F" target="_blank" class="btn-wa-direct">
+            <span>💬</span> Pedir por WhatsApp
+          </a>
+          <a href="contacto.html" class="btn btn-outline" style="font-size:.85rem;padding:10px;">Consultar por formulario</a>
+        </div>
+      </div>
+
+      <!-- PACK 02 -->
+      <div class="pack-card featured fade-in" id="pack2" data-cat="inicial">
+        <div class="pack-badge">⭐ Más solicitado</div>
+        <div class="pack-num">Pack 02</div>
+        <div class="pack-name">Negocio Online</div>
+        <div class="pack-tagline">Presencia digital integral para comenzar a captar clientes y vender</div>
+        <div class="pack-divider"></div>
+        <div class="pack-includes">Servicios incluidos</div>
+        <ul class="pack-list">
+          <li>Todo lo incluido en el <strong>Pack Inicio Digital</strong></li>
+          <li>Sitio web profesional responsive con certificado SSL</li>
+          <li>Configuración y optimización de Instagram y Facebook</li>
+          <li>Identidad visual básica: logotipo, paleta y tipografías</li>
+          <li>Integración de botón WhatsApp y formulario de contacto</li>
+        </ul>
+        <button class="pack-details-btn" onclick="toggleDetails('details-2')">
+          <span>▾ Ver detalles técnicos</span>
+        </button>
+        <div class="pack-details-content" id="details-2">
+          • Sitio web rápido (< 1s de carga) adaptado a móviles, tablets y PC.<br>
+          • Optimización de biografías, destacados y enlaces en redes sociales.<br>
+          • Manual de uso y credenciales entregadas de forma segura.<br>
+          • Soporte y garantía de funcionamiento durante 60 días.
+        </div>
+        <div class="pack-cta">
+          <a href="https://wa.me/5491136682292?text=Hola%20Kytech%2C%20estoy%20interesado%20en%20el%20Pack%2002%20(Negocio%20Online).%20%C2%BFPodr%C3%ADan%20brindarme%20m%C3%A1s%20informaci%C3%B3n%3F" target="_blank" class="btn-wa-direct">
+            <span>💬</span> Pedir por WhatsApp
+          </a>
+          <a href="contacto.html" class="btn btn-primary" style="font-size:.85rem;padding:10px;">Solicitar propuesta formal</a>
+        </div>
+      </div>
+
+      <!-- PACK 03 -->
+      <div class="pack-card fade-in" id="pack3" data-cat="escala">
+        <div class="pack-num">Pack 03</div>
+        <div class="pack-name">Crecimiento Digital</div>
+        <div class="pack-tagline">Activación de canales publicitarios para adquisición sistemática de clientes</div>
+        <div class="pack-divider"></div>
+        <div class="pack-includes">Servicios incluidos</div>
+        <ul class="pack-list">
+          <li>Todo lo incluido en el <strong>Pack Negocio Online</strong></li>
+          <li>SEO local y alta verificada en Google Maps</li>
+          <li>Campaña publicitaria inicial (Google Ads o Meta Ads)</li>
+          <li>Pixel de Meta y Google Analytics 4 implementados</li>
+          <li>Automatización de alertas de consultas a su WhatsApp</li>
+        </ul>
+        <button class="pack-details-btn" onclick="toggleDetails('details-3')">
+          <span>▾ Ver detalles técnicos</span>
+        </button>
+        <div class="pack-details-content" id="details-3">
+          • Segmentación de público geolocalizado con palabras clave comerciales.<br>
+          • Medición exacta de conversiones y ROI de anuncios.<br>
+          • Reporte mensual de métricas y rendimiento.<br>
+          • Acompañamiento estratégico continuo.
+        </div>
+        <div class="pack-cta">
+          <a href="https://wa.me/5491136682292?text=Hola%20Kytech%2C%20quiero%20hacer%20crecer%20mi%20negocio%20con%20el%20Pack%2003%20(Crecimiento%20Digital).%20%C2%BFPodemos%20coordinar%20una%20reuni%C3%B3n%3F" target="_blank" class="btn-wa-direct">
+            <span>💬</span> Pedir por WhatsApp
+          </a>
+          <a href="contacto.html" class="btn btn-outline" style="font-size:.85rem;padding:10px;">Consultar por formulario</a>
+        </div>
+      </div>
+
+      <!-- PACK 04 -->
+      <div class="pack-card dark-featured fade-in" id="pack4" data-cat="escala">
+        <div class="pack-badge" style="background:var(--accent-light);color:var(--dark);">🚀 Solución 360°</div>
+        <div class="pack-num">Pack 04</div>
+        <div class="pack-name">Emprendedor Completo</div>
+        <div class="pack-tagline">Solución integral: presencia digital llave en mano + iPhone profesional verificado</div>
+        <div class="pack-divider"></div>
+        <div class="pack-includes">Servicios e Infraestructura</div>
+        <ul class="pack-list">
+          <li>Pack Negocio Online completo llave en mano</li>
+          <li><strong>iPhone profesional certificado</strong> (Grado A, batería 88%+)</li>
+          <li>WhatsApp Business configurado en el propio equipo</li>
+          <li>Apps de productividad y redes operativas desde la entrega</li>
+          <li>Garantía técnica documentada de 6 meses en hardware</li>
+        </ul>
+        <button class="pack-details-btn" onclick="toggleDetails('details-4')">
+          <span>▾ Ver detalles técnicos</span>
+        </button>
+        <div class="pack-details-content" id="details-4">
+          • Equipo sometido al proceso de auditoría técnica de 9 etapas de Kytech.<br>
+          • Restauración oficial de fábrica, libre de cuentas iCloud o bloqueos.<br>
+          • Accesorios completos de carga incluidos.<br>
+          • Capacitación inicial personalizada para comenzar a operar de inmediato.
+        </div>
+        <div class="pack-cta">
+          <a href="https://wa.me/5491136682292?text=Hola%20Kytech%2C%20me%20interesa%20el%20Pack%2004%20(Emprendedor%20Completo%20con%20iPhone).%20%C2%BFQu%C3%A9%20modelos%20y%20precios%20tienen%20disponibles%3F" target="_blank" class="btn-wa-direct">
+            <span>💬</span> Pedir por WhatsApp
+          </a>
+          <a href="contacto.html" class="btn btn-primary" style="font-size:.85rem;padding:10px;">Consultar disponibilidad</a>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- TABLA COMPARATIVA INTERACTIVA -->
+    <div class="table-toggle-wrap fade-in">
+      <button class="btn btn-outline" id="toggleTableBtn" onclick="toggleComparisonTable()">
+        <span>📊 Ver tabla comparativa completa entre packs</span>
+      </button>
+    </div>
+
+    <div class="comparison-table-wrap" id="compTableWrap">
+      <table class="comp-table">
+        <thead>
+          <tr>
+            <th>Característica / Módulo</th>
+            <th>Pack 01<br><small>Inicio</small></th>
+            <th>Pack 02<br><small>Negocio</small></th>
+            <th>Pack 03<br><small>Crecimiento</small></th>
+            <th>Pack 04<br><small>Integral 360°</small></th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Dominio propio (.com / .com.ar)</td>
+            <td class="comp-check">✓</td>
+            <td class="comp-check">✓</td>
+            <td class="comp-check">✓</td>
+            <td class="comp-check">✓</td>
+          </tr>
+          <tr>
+            <td>Correo corporativo profesional</td>
+            <td class="comp-check">✓</td>
+            <td class="comp-check">✓</td>
+            <td class="comp-check">✓</td>
+            <td class="comp-check">✓</td>
+          </tr>
+          <tr>
+            <td>WhatsApp Business configurado</td>
+            <td class="comp-check">✓</td>
+            <td class="comp-check">✓</td>
+            <td class="comp-check">✓</td>
+            <td class="comp-check">✓</td>
+          </tr>
+          <tr>
+            <td>Sitio Web Corporativo Responsive</td>
+            <td class="comp-dash">—</td>
+            <td class="comp-check">✓</td>
+            <td class="comp-check">✓</td>
+            <td class="comp-check">✓</td>
+          </tr>
+          <tr>
+            <td>Identidad de marca y redes sociales</td>
+            <td class="comp-dash">—</td>
+            <td class="comp-check">✓</td>
+            <td class="comp-check">✓</td>
+            <td class="comp-check">✓</td>
+          </tr>
+          <tr>
+            <td>Google Ads / Meta Ads (Publicidad)</td>
+            <td class="comp-dash">—</td>
+            <td class="comp-dash">—</td>
+            <td class="comp-check">✓</td>
+            <td class="comp-dash">—</td>
+          </tr>
+          <tr>
+            <td>SEO Local y Google Maps</td>
+            <td class="comp-dash">—</td>
+            <td class="comp-dash">—</td>
+            <td class="comp-check">✓</td>
+            <td class="comp-dash">—</td>
+          </tr>
+          <tr>
+            <td>iPhone Profesional Certificado</td>
+            <td class="comp-dash">—</td>
+            <td class="comp-dash">—</td>
+            <td class="comp-dash">—</td>
+            <td class="comp-check">✓</td>
+          </tr>
+          <tr>
+            <td>Garantía y Acompañamiento</td>
+            <td>30 días</td>
+            <td>60 días</td>
+            <td>90 días</td>
+            <td>6 meses</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+  </div>
+</section>
+
+<section class="section-sm" style="background:var(--surface2);border-top:1px solid var(--border);">
+  <div class="container">
+    <div class="cta-banner fade-in">
+      <h2>¿Necesita asesoramiento para seleccionar el pack?</h2>
+      <p>Realizamos un diagnóstico gratuito y recomendamos la solución más adecuada a su situación actual y objetivos.</p>
+      <div class="cta-btns">
+        <a href="contacto.html" class="btn btn-primary">Solicitar asesoramiento →</a>
+        <a href="servicios.html" class="btn btn-outline" style="color:#a8c8e8;border-color:rgba(125,212,252,.3);">Ver todos los servicios</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="container">
+    <div class="footer-top">
+      <div class="footer-brand">
+        <a href="index.html" class="footer-logo-img"><img src="Logo_KyTech.jpg" alt="Kytech"></a>
+        <p>Soluciones digitales integrales para empresas y emprendedores.</p>
+        <div class="footer-contact">
+          <a href="mailto:info@kytech.com.ar"><span>✉️</span> info@kytech.com.ar</a>
+          <a href="https://wa.me/5491136682292"><span>💬</span> +54 9 11 3668-2292</a>
+        </div>
+      </div>
+      <div class="footer-nav">
+        <h4>Navegación</h4>
+        <a href="index.html">Inicio</a>
+        <a href="servicios.html">Servicios</a>
+        <a href="packs.html">Packs</a>
+        <a href="tienda.html">Tienda</a>
+        <a href="como.html">Cómo trabajamos</a>
+        <a href="contacto.html">Contacto</a>
+      </div>
+      <div class="footer-social">
+        <h4>Redes sociales</h4>
+        <div class="social-icons">
+          <a href="https://www.instagram.com/kyberkytech/" target="_blank" class="social-link">
+            <div class="social-icon"><svg width="16" height="16" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zM12 16a4 4 0 110-8 4 4 0 010 8zm6.406-11.845a1.44 1.44 0 100 2.881 1.44 1.44 0 000-2.881z"/></svg></div>
+            Instagram
+          </a>
+          <a href="https://www.facebook.com/profile.php?id=61588378361395" target="_blank" class="social-link">
+            <div class="social-icon"><svg width="16" height="16" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg></div>
+            Facebook
+          </a>
+          <a href="https://www.tiktok.com/@kytech_ok" target="_blank" class="social-link">
+            <div class="social-icon"><svg width="16" height="16" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M12.525.02c1.31-.02 2.61-.01 3.91-.02.08 1.53.63 3.09 1.75 4.17 1.12 1.11 2.7 1.62 4.24 1.79v4.03c-1.44-.05-2.89-.35-4.2-.97-.57-.26-1.1-.59-1.62-.93-.01 2.92.01 5.84-.02 8.75-.08 1.4-.54 2.79-1.35 3.94-1.31 1.92-3.58 3.17-5.91 3.21-1.43.08-2.86-.31-4.08-1.03-2.02-1.19-3.44-3.37-3.65-5.71-.02-.5-.03-1-.01-1.49.18-1.9 1.12-3.72 2.58-4.96 1.66-1.44 3.98-2.13 6.15-1.72.02 1.48-.04 2.96-.04 4.44-.99-.32-2.15-.23-3.02.37-.63.41-1.11 1.04-1.36 1.75-.21.51-.15 1.07-.14 1.61.24 1.64 1.82 3.02 3.5 2.87 1.12-.01 2.19-.66 2.77-1.61.19-.33.4-.67.41-1.06.1-1.79.06-3.57.07-5.36.01-4.03-.01-8.05.02-12.07z"/></svg></div>
+            TikTok
+          </a>
+          <a href="https://www.youtube.com/@KyTech_Ok" target="_blank" class="social-link">
+            <div class="social-icon"><svg width="16" height="16" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M23.495 6.205a3.007 3.007 0 00-2.088-2.088c-1.87-.501-9.396-.501-9.396-.501s-7.507-.01-9.396.501A3.007 3.007 0 00.527 6.205a31.247 31.247 0 00-.522 5.805 31.247 31.247 0 00.522 5.783 3.007 3.007 0 002.088 2.088c1.868.502 9.396.502 9.396.502s7.506 0 9.396-.502a3.007 3.007 0 002.088-2.088 31.247 31.247 0 00.5-5.783 31.247 31.247 0 00-.5-5.805zM9.609 15.601V8.408l6.264 3.602z"/></svg></div>
+            YouTube
+          </a>
+          <a href="https://x.com/KyTech_Ok" target="_blank" class="social-link">
+            <div class="social-icon"><svg width="14" height="14" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-4.714-6.231-5.401 6.231H2.743l7.73-8.835L1.254 2.25H8.08l4.253 5.622zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg></div>
+            X (Twitter)
+          </a>
+        </div>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p class="footer-copy">© 2025 Kytech. Todos los derechos reservados.</p>
+      <p class="footer-copy">Diseño y desarrollo: Kytech</p>
+    </div>
+  </div>
+</footer>
+
+
+<script>
+  // Sticky nav scroll handler
+  const nav = document.getElementById('mainNav');
+  window.addEventListener('scroll', () => {
+    if (window.scrollY > 40) {
+      if (nav) nav.classList.add('scrolled');
+    } else {
+      if (nav) nav.classList.remove('scrolled');
+    }
+  });
+
+  const hamburger = document.getElementById('hamburger');
+  const mobileMenu = document.getElementById('mobile-menu');
+  hamburger.addEventListener('click', () => mobileMenu.classList.toggle('open'));
+  mobileMenu.querySelectorAll('a').forEach(a => a.addEventListener('click', () => mobileMenu.classList.remove('open')));
+  const obs = new IntersectionObserver(entries => entries.forEach(e => { if(e.isIntersecting){ e.target.classList.add('visible'); obs.unobserve(e.target); } }), { threshold: 0.1 });
+  document.querySelectorAll('.fade-in').forEach(f => obs.observe(f));
+
+  // Asistente Interactivo de Recomendación
+  function selectAdvisor(packId) {
+    document.querySelectorAll('.advisor-btn').forEach(b => b.classList.remove('selected'));
+    document.querySelectorAll('.pack-card').forEach(c => c.classList.remove('pack-highlight'));
+    
+    if (window.event && window.event.currentTarget) {
+      window.event.currentTarget.classList.add('selected');
+    }
+    
+    const targetPack = document.getElementById(packId);
+    if (targetPack) {
+      filterPacks('all', document.querySelector('.filter-tab'));
+      targetPack.classList.add('pack-highlight');
+      
+      const advisorResult = document.getElementById('advisorResult');
+      const advisorText = document.getElementById('advisorText');
+      const packName = targetPack.querySelector('.pack-name').textContent;
+      advisorText.textContent = `Recomendación: "${packName}" es la solución ideal para este objetivo.`;
+      advisorResult.classList.add('show');
+
+      targetPack.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    }
+  }
+
+  // Filtro de Packs por Categoría
+  function filterPacks(cat, btn) {
+    document.querySelectorAll('.filter-tab').forEach(b => b.classList.remove('active'));
+    if (btn) btn.classList.add('active');
+
+    const cards = document.querySelectorAll('.pack-card');
+    cards.forEach(card => {
+      const cardCat = card.getAttribute('data-cat');
+      if (cat === 'all' || cardCat === cat) {
+        card.style.display = 'flex';
+        card.classList.add('fade-in');
+        card.classList.add('visible');
+      } else {
+        card.style.display = 'none';
+      }
+    });
+  }
+
+  // Desglose de detalles técnicos
+  function toggleDetails(id) {
+    const el = document.getElementById(id);
+    if (el) {
+      el.classList.toggle('open');
+      const btn = el.previousElementSibling;
+      if (btn && btn.querySelector('span')) {
+        btn.querySelector('span').textContent = el.classList.contains('open') 
+          ? '▴ Ocultar detalles' 
+          : '▾ Ver detalles técnicos';
+      }
+    }
+  }
+
+  // Toggle de tabla comparativa
+  function toggleComparisonTable() {
+    const wrap = document.getElementById('compTableWrap');
+    const btn = document.getElementById('toggleTableBtn');
+    if (wrap) {
+      wrap.classList.toggle('open');
+      btn.querySelector('span').textContent = wrap.classList.contains('open')
+        ? '▲ Ocultar tabla comparativa'
+        : '📊 Ver tabla comparativa completa entre packs';
+      if (wrap.classList.contains('open')) {
+        wrap.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+      }
+    }
+  }
+
+  // WhatsApp menu
+  function toggleWaMenu(e) {
+    e.stopPropagation();
+    const menu = document.getElementById('waMenu');
+    menu.classList.toggle('open');
+  }
+  document.addEventListener('click', function(e) {
+    const wrapper = document.getElementById('waWrapper');
+    if (wrapper && !wrapper.contains(e.target)) {
+      document.getElementById('waMenu').classList.remove('open');
+    }
+  });
+</script>
+<!-- WhatsApp flotante con menú de opciones -->
+<div class="wa-wrapper" id="waWrapper">
+
+  <!-- Menú de opciones -->
+  <div class="wa-menu" id="waMenu">
+    <div class="wa-menu-header">
+      <span>¿En qué podemos ayudarle?</span>
+      <button class="wa-close" onclick="toggleWaMenu(event)">✕</button>
+    </div>
+    <a class="wa-option" href="https://wa.me/5491136682292?text=Hola%2C%20me%20interesa%20iniciar%20mi%20negocio%20digital%20desde%20cero.%20%C2%BFPodr%C3%ADan%20asesorarme%3F" target="_blank">
+      <span class="wa-opt-icon">🚀</span>
+      <div>
+        <strong>Quiero iniciar mi negocio digital</strong>
+        <small>Consulta sobre servicios y packs</small>
+      </div>
+    </a>
+    <a class="wa-option" href="https://wa.me/5491136682292?text=Hola%2C%20estoy%20interesado%20en%20adquirir%20un%20iPhone.%20%C2%BFQu%C3%A9%20equipos%20tienen%20disponibles%3F" target="_blank">
+      <span class="wa-opt-icon">📱</span>
+      <div>
+        <strong>Consulta sobre iPhones</strong>
+        <small>Stock, precios y especificaciones</small>
+      </div>
+    </a>
+    <a class="wa-option" href="https://wa.me/5491136682292?text=Hola%2C%20quisiera%20obtener%20un%20diagn%C3%B3stico%20digital%20gratuito%20para%20mi%20empresa." target="_blank">
+      <span class="wa-opt-icon">🔍</span>
+      <div>
+        <strong>Solicitar diagnóstico gratuito</strong>
+        <small>Evaluación de su presencia digital</small>
+      </div>
+    </a>
+    <a class="wa-option" href="https://wa.me/5491136682292?text=Hola%2C%20ya%20soy%20cliente%20de%20Kytech%20y%20necesito%20soporte%20t%C3%A9cnico." target="_blank">
+      <span class="wa-opt-icon">🛠️</span>
+      <div>
+        <strong>Soporte técnico</strong>
+        <small>Asistencia para clientes actuales</small>
+      </div>
+    </a>
+    <a class="wa-option" href="https://wa.me/5491136682292?text=Hola%2C%20tengo%20una%20consulta%20general%20sobre%20los%20servicios%20de%20Kytech." target="_blank">
+      <span class="wa-opt-icon">💬</span>
+      <div>
+        <strong>Consulta general</strong>
+        <small>Otra consulta o información</small>
+      </div>
+    </a>
+  </div>
+
+  <!-- Botón flotante -->
+  <button class="wa-float" onclick="toggleWaMenu(event)" aria-label="Contactar por WhatsApp">
+    <div class="wa-float-icon">
+      <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+    </div>
+    <div class="wa-float-text">
+      <span class="wa-top">¿Necesita ayuda?</span>
+      <span class="wa-bottom">Contáctenos</span>
+    </div>
+  </button>
+
+</div>
+
+</body>
+</html>
