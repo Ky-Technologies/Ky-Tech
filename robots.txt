@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://kytech.com.ar/sitemap.xml
