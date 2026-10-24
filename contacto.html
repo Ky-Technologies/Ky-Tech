@@ -8,7 +8,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700&display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="style.css?v=8" />
+  <link rel="stylesheet" href="style.css?v=9" />
 </head>
 <body class="contact-page">
   <a class="contact-skip" href="#contenido">Saltar al contenido</a>
@@ -103,9 +103,17 @@
             <textarea id="contact-message" name="message" placeholder="Cuéntanos qué estás construyendo, qué necesitas resolver o qué te gustaría mejorar." required></textarea>
           </div>
 
-          <button class="contact-submit" type="submit">Enviar consulta <span aria-hidden="true">→</span></button>
+          <p class="contact-form-error" role="alert" hidden>No pudimos enviar tu consulta. Inténtalo nuevamente o escríbenos por <a href="https://wa.me/5491136682292?text=Hola%20KyTech%2C%20quiero%20consultar%20por%20un%20proyecto." target="_blank" rel="noopener noreferrer">WhatsApp</a>.</p>
+          <button class="contact-submit" type="submit"><span class="contact-submit-label">Enviar consulta</span><span aria-hidden="true">→</span></button>
           <p class="contact-privacy">Al enviar este formulario utilizaremos tus datos únicamente para responder tu consulta.</p>
         </form>
+        <section class="contact-form-success" role="status" aria-live="polite" tabindex="-1" hidden>
+          <span class="contact-form-success-icon" aria-hidden="true">✓</span>
+          <h2>¡Gracias por escribirnos!</h2>
+          <p>Recibimos tu consulta correctamente.</p>
+          <p>Revisaremos la información que nos compartiste para continuar la conversación.</p>
+          <a class="contact-form-success-link" href="index.html">Volver al inicio</a>
+        </section>
       </div>
     </section>
 
@@ -300,6 +308,13 @@
       const mobileMenu = document.getElementById('contact-mobile-menu');
       const serviceSelect = document.getElementById('contact-service');
       const whatsappFloat = document.querySelector('.ky-whatsapp-float');
+      const formHeading = document.querySelector('.contact-form-heading');
+      const contactForm = document.querySelector('.contact-form');
+      const submitButton = contactForm.querySelector('.contact-submit');
+      const submitLabel = contactForm.querySelector('.contact-submit-label');
+      const formError = contactForm.querySelector('.contact-form-error');
+      const formSuccess = document.querySelector('.contact-form-success');
+      let isSubmitting = false;
 
       function closeMenu() {
         mobileMenu.hidden = true;
@@ -324,6 +339,39 @@
         link.addEventListener('click', () => {
           serviceSelect.value = link.dataset.service;
         });
+      });
+
+      contactForm.addEventListener('submit', async (event) => {
+        event.preventDefault();
+        if (isSubmitting) return;
+
+        isSubmitting = true;
+        formError.hidden = true;
+        submitButton.disabled = true;
+        submitLabel.textContent = 'Enviando...';
+
+        try {
+          const response = await fetch(contactForm.action, {
+            method: contactForm.method,
+            body: new FormData(contactForm),
+            headers: { Accept: 'application/json' }
+          });
+          const result = await response.json();
+          if (!response.ok || result.success !== true) {
+            throw new Error('Web3Forms did not confirm the submission.');
+          }
+
+          contactForm.hidden = true;
+          formHeading.hidden = true;
+          formSuccess.hidden = false;
+          formSuccess.focus();
+        } catch (error) {
+          console.error('No se pudo enviar el formulario de contacto.', error);
+          formError.hidden = false;
+          submitButton.disabled = false;
+          submitLabel.textContent = 'Enviar consulta';
+          isSubmitting = false;
+        }
       });
 
       function updateWhatsappFloat() {
