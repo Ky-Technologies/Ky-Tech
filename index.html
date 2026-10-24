@@ -221,12 +221,6 @@
       </div>
     </section>
 
-    <section class="home-brand-banner" aria-label="KyTech">
-      <div class="home-container home-brand-banner-inner">
-        <img src="Baner.png" alt="KyTech — tecnología y soluciones digitales" />
-      </div>
-    </section>
-
     <section class="home-contact" id="contacto" aria-labelledby="contact-title">
       <div class="home-container home-contact-inner">
         <div>
@@ -288,33 +282,5 @@
     </svg>
     <span class="ky-whatsapp-copy"><strong>¿Necesitas ayuda?</strong><span>Escríbenos</span></span>
   </a>
-  <script>
-    const brandBanner = document.querySelector('.home-brand-banner img');
-    const whatsappFloat = document.querySelector('.ky-whatsapp-float');
-    let overlapCheckPending = false;
-
-    function updateWhatsappVisibility() {
-      const bannerRect = brandBanner.getBoundingClientRect();
-      const whatsappRect = whatsappFloat.getBoundingClientRect();
-      const overlaps = bannerRect.left < whatsappRect.right
-        && bannerRect.right > whatsappRect.left
-        && bannerRect.top < whatsappRect.bottom
-        && bannerRect.bottom > whatsappRect.top;
-
-      whatsappFloat.classList.toggle('contact-float-obstructed', overlaps);
-      overlapCheckPending = false;
-    }
-
-    function scheduleOverlapCheck() {
-      if (!overlapCheckPending) {
-        overlapCheckPending = true;
-        window.requestAnimationFrame(updateWhatsappVisibility);
-      }
-    }
-
-    window.addEventListener('scroll', scheduleOverlapCheck, { passive: true });
-    window.addEventListener('resize', scheduleOverlapCheck);
-    updateWhatsappVisibility();
-  </script>
 </body>
 </html>
