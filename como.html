@@ -23,7 +23,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700&display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="style.css?v=10" />
+  <link rel="stylesheet" href="style.css?v=11" />
 </head>
 <body class="como-page">
   <a class="como-skip" href="#contenido">Saltar al contenido</a>
@@ -362,5 +362,49 @@
     </svg>
     <span class="ky-whatsapp-copy"><strong>¿Necesitas ayuda?</strong><span>Escríbenos</span></span>
   </a>
+  <script>
+    (() => {
+      const whatsappFloat = document.querySelector('.ky-whatsapp-float');
+      let updatePending = false;
+
+      function updateWhatsappFloat() {
+        updatePending = false;
+        const floatRect = whatsappFloat.getBoundingClientRect();
+        const overlapsControl = [...document.querySelectorAll('main a[href], main button, footer a[href], footer button')]
+          .some((element) => {
+            const style = getComputedStyle(element);
+            const rect = element.getBoundingClientRect();
+            return style.visibility !== 'hidden' && style.display !== 'none' &&
+              rect.width > 0 && rect.height > 0 &&
+              rect.right > floatRect.left && rect.left < floatRect.right &&
+              rect.bottom > floatRect.top && rect.top < floatRect.bottom;
+          });
+
+        whatsappFloat.classList.toggle('ky-whatsapp-obstructed', overlapsControl);
+      }
+
+      function scheduleWhatsappUpdate() {
+        if (!updatePending) {
+          updatePending = true;
+          requestAnimationFrame(updateWhatsappFloat);
+        }
+      }
+
+      window.addEventListener('scroll', scheduleWhatsappUpdate, { passive: true });
+      window.addEventListener('resize', scheduleWhatsappUpdate);
+      window.addEventListener('load', scheduleWhatsappUpdate);
+      const mutationObserver = new MutationObserver(scheduleWhatsappUpdate);
+      [document.querySelector('main'), document.querySelector('footer')].forEach((region) => {
+        mutationObserver.observe(region, {
+          attributes: true,
+          attributeFilter: ['class', 'hidden', 'style'],
+          characterData: true,
+          childList: true,
+          subtree: true
+        });
+      });
+      scheduleWhatsappUpdate();
+    })();
+  </script>
 </body>
 </html>
