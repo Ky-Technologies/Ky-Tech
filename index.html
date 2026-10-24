@@ -9,6 +9,9 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="style.css?v=9" />
+  <link rel="icon" type="image/png" sizes="32x32" href="assets/favicon-32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="assets/favicon-16.png">
+  <link rel="shortcut icon" href="favicon.ico">
 </head>
 <body class="home-page">
   <a class="home-skip-link" href="#contenido">Saltar al contenido</a>
@@ -206,6 +209,12 @@
       </div>
     </section>
 
+    <section class="home-brand-banner" aria-label="KyTech">
+      <div class="home-container home-brand-banner-inner">
+        <img src="Baner.png" alt="KyTech — tecnología y soluciones digitales" />
+      </div>
+    </section>
+
     <section class="home-contact" id="contacto" aria-labelledby="contact-title">
       <div class="home-container home-contact-inner">
         <div>
@@ -267,5 +276,33 @@
     </svg>
     <span class="ky-whatsapp-copy"><strong>¿Necesitas ayuda?</strong><span>Escríbenos</span></span>
   </a>
+  <script>
+    const brandBanner = document.querySelector('.home-brand-banner img');
+    const whatsappFloat = document.querySelector('.ky-whatsapp-float');
+    let overlapCheckPending = false;
+
+    function updateWhatsappVisibility() {
+      const bannerRect = brandBanner.getBoundingClientRect();
+      const whatsappRect = whatsappFloat.getBoundingClientRect();
+      const overlaps = bannerRect.left < whatsappRect.right
+        && bannerRect.right > whatsappRect.left
+        && bannerRect.top < whatsappRect.bottom
+        && bannerRect.bottom > whatsappRect.top;
+
+      whatsappFloat.classList.toggle('contact-float-obstructed', overlaps);
+      overlapCheckPending = false;
+    }
+
+    function scheduleOverlapCheck() {
+      if (!overlapCheckPending) {
+        overlapCheckPending = true;
+        window.requestAnimationFrame(updateWhatsappVisibility);
+      }
+    }
+
+    window.addEventListener('scroll', scheduleOverlapCheck, { passive: true });
+    window.addEventListener('resize', scheduleOverlapCheck);
+    updateWhatsappVisibility();
+  </script>
 </body>
 </html>
