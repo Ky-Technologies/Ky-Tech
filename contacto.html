@@ -359,6 +359,13 @@
           menuButton.focus();
         }
       });
+      document.addEventListener('click', (event) => {
+        const whatsappLink = event.target.closest('a[href^="https://wa.me/"]');
+
+        if (!whatsappLink) return;
+
+        gtag('event', 'contact_whatsapp');
+      });
       document.querySelectorAll('.contact-topic-list a').forEach((link) => {
         link.addEventListener('click', () => {
           serviceSelect.value = link.dataset.service;

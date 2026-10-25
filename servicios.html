@@ -406,6 +406,13 @@
           menuButton.focus();
         }
       });
+      document.addEventListener('click', (event) => {
+        const whatsappLink = event.target.closest('a[href^="https://wa.me/"]');
+
+        if (!whatsappLink) return;
+
+        gtag('event', 'contact_whatsapp');
+      });
     })();
   </script>
   <a class="ky-whatsapp-float" href="https://wa.me/5491136682292?text=Hola%20KyTech%2C%20quiero%20consultar%20por%20un%20proyecto." target="_blank" rel="noopener noreferrer" aria-label="Contactar a KyTech por WhatsApp">
