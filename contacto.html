@@ -385,6 +385,8 @@
             throw new Error('Web3Forms did not confirm the submission.');
           }
 
+          gtag('event', 'generate_lead');
+
           contactForm.hidden = true;
           formHeading.hidden = true;
           formSuccess.hidden = false;
