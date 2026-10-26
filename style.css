@@ -1988,6 +1988,20 @@ footer {
 .servi-faq-list details[open] summary::after { content: "−"; }
 .servi-faq-list details p { max-width: 620px; margin: -4px 34px 22px 0; color: var(--servi-muted); }
 
+.servi-projects { padding-block: 88px; background: #ffffff; }
+.servi-projects-heading { margin-bottom: 36px; }
+.servi-project-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 24px; }
+.servi-project-card { min-width: 0; overflow: hidden; border: 1px solid var(--servi-border); border-radius: 14px; background: #ffffff; box-shadow: 0 4px 16px rgba(21, 25, 34, .05); transition: transform 180ms ease, border-color 180ms ease, box-shadow 180ms ease; }
+.servi-project-card:hover { transform: translateY(-3px); border-color: #c8d5ed; box-shadow: 0 10px 24px rgba(21, 25, 34, .1); }
+.servi-project-image { aspect-ratio: 16 / 10; overflow: hidden; margin: 0; background: var(--servi-surface); }
+.servi-project-image img { display: block; width: 100%; height: 100%; object-fit: cover; object-position: top center; }
+.servi-project-content { padding: 22px; }
+.servi-project-category { margin: 0 0 8px; color: var(--servi-blue) !important; font-size: .76rem; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; }
+.servi-project-content h3 { margin: 0; font-size: 1.25rem; line-height: 1.35; }
+.servi-project-domain { margin: 6px 0 16px; color: var(--servi-muted); font-size: .88rem; overflow-wrap: anywhere; }
+.servi-project-content > a { min-height: 44px; display: inline-flex; align-items: center; gap: 8px; color: var(--servi-blue); font-size: .92rem; font-weight: 700; text-decoration: none; }
+.servi-project-content > a:hover { text-decoration: underline; text-underline-offset: 4px; }
+
 .servi-closing { padding-block: 76px; background: var(--servi-dark); color: #ffffff; }
 .servi-closing-inner { display: flex; align-items: center; justify-content: space-between; gap: 48px; }
 .servi-closing .servi-eyebrow { color: #a9c0ff !important; }
@@ -2067,6 +2081,7 @@ footer {
   .servi-featured-steps { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); }
   .servi-featured-steps li { grid-template-columns: 32px 1fr; gap: 10px; padding: 18px 12px 0 0; border-bottom: 0; }
   .servi-featured-steps li + li { padding-left: 12px; border-left: 1px solid #d7e1f3; }
+  .servi-project-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
   .servi-decision-list { grid-template-columns: repeat(2, minmax(0, 1fr)); }
   .servi-decision-list li { min-height: 160px; }
   .servi-decision-list li:nth-child(3) { padding-left: 0; border-top: 1px solid var(--servi-border); border-left: 0; }
@@ -2086,7 +2101,8 @@ footer {
   .servi-featured,
   .servi-group,
   .servi-decisions,
-  .servi-faq { padding-block: 64px; }
+  .servi-faq,
+  .servi-projects { padding-block: 64px; }
   .servi-featured-layout,
   .servi-grow-layout,
   .servi-flexible-inner,
@@ -2105,6 +2121,8 @@ footer {
   .servi-work-item-automation,
   .servi-work-item-ai { grid-column: auto; }
   .servi-work-item { padding-block: 26px; }
+  .servi-project-grid { grid-template-columns: 1fr; gap: 18px; }
+  .servi-project-content { padding: 20px; }
   .servi-principle { margin: 8px 0 0; }
   .servi-support { padding: 26px 22px; }
   .servi-support-list { grid-template-columns: 1fr; }
