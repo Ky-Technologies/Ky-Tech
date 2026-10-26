@@ -872,6 +872,42 @@ footer {
   border-bottom: 1px solid var(--home-border);
 }
 
+.home-why { background: var(--home-surface); }
+
+.home-why-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  border-top: 1px solid var(--home-border);
+  border-bottom: 1px solid var(--home-border);
+}
+
+.home-why-item {
+  min-width: 0;
+  min-height: 190px;
+  padding: 26px 28px 30px 0;
+}
+
+.home-why-item + .home-why-item {
+  padding-left: 28px;
+  border-left: 1px solid var(--home-border);
+}
+
+.home-why-item > span {
+  display: block;
+  margin-bottom: 22px;
+}
+
+.home-why-item h3 {
+  margin: 0;
+  font-size: 1.2rem;
+  line-height: 1.35;
+}
+
+.home-why-item p {
+  margin: 10px 0 0;
+  color: var(--home-muted) !important;
+}
+
 .home-journey-step {
   min-height: 180px;
   display: grid;
@@ -1012,6 +1048,8 @@ footer {
 
 .home-project-card {
   min-width: 0;
+  display: flex;
+  flex-direction: column;
   overflow: hidden;
   border: 1px solid var(--home-border);
   border-radius: 12px;
@@ -1028,6 +1066,7 @@ footer {
 
 .home-project-image {
   aspect-ratio: 16 / 10;
+  flex: 0 0 auto;
   overflow: hidden;
   margin: 0;
   background: var(--home-surface);
@@ -1041,7 +1080,13 @@ footer {
   object-position: top center;
 }
 
-.home-project-content { padding: 22px; }
+.home-project-content {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  padding: 22px;
+}
 
 .home-project-category {
   margin: 0 0 8px;
@@ -1058,12 +1103,18 @@ footer {
   line-height: 1.35;
 }
 
+.home-project-description {
+  margin: 10px 0 20px;
+  color: var(--home-muted) !important;
+  font-size: .9rem;
+}
+
 .home-project-content > a {
   min-height: 44px;
   display: inline-flex;
   align-items: center;
   gap: 8px;
-  margin-top: 8px;
+  margin-top: auto;
   color: var(--home-blue);
   font-size: .92rem;
   font-weight: 700;
@@ -1410,6 +1461,15 @@ footer {
     border-top: 1px solid var(--home-border);
     border-left: 0;
   }
+  .home-why-grid { grid-template-columns: 1fr; }
+  .home-why-item,
+  .home-why-item + .home-why-item {
+    min-height: 0;
+    padding: 22px 0;
+    border-left: 0;
+  }
+  .home-why-item + .home-why-item { border-top: 1px solid var(--home-border); }
+  .home-why-item > span { margin-bottom: 12px; }
   .home-section-heading { margin-bottom: 28px; }
   .home-accompaniment-layout {
     grid-template-columns: 1fr;
