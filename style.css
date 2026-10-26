@@ -1038,6 +1038,38 @@ footer {
 
 .home-startup-service .home-group-link { margin: 0; }
 
+.home-resource-invite {
+  padding-block: 36px;
+  background: #ffffff;
+}
+
+.home-resource-invite-inner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 28px;
+  padding: 24px 28px;
+  border: 1px solid var(--home-border);
+  border-radius: 12px;
+  background: var(--home-surface);
+}
+
+.home-resource-invite .home-eyebrow { margin-bottom: 8px; }
+
+.home-resource-invite h2 {
+  margin: 0;
+  font-size: clamp(1.25rem, 2.4vw, 1.7rem);
+  line-height: 1.3;
+}
+
+.home-resource-invite > .home-container > div > p:last-child {
+  margin: 8px 0 0;
+  color: var(--home-muted) !important;
+  font-size: .92rem;
+}
+
+.home-resource-invite .home-group-link { flex: 0 0 auto; }
+
 .home-projects { background: #ffffff; }
 
 .home-project-grid {
@@ -1450,6 +1482,7 @@ footer {
   .home-hero-description { font-size: 1rem; }
   .home-hero-visual { max-width: 620px; }
   .home-section { padding-block: 64px; }
+  .home-resource-invite-inner { align-items: flex-start; flex-direction: column; gap: 14px; padding: 22px; }
   .home-journey-grid { grid-template-columns: 1fr; }
   .home-journey-step {
     min-height: 0;
@@ -1540,6 +1573,69 @@ footer {
     scroll-behavior: auto !important;
     transition-duration: 0.01ms !important;
   }
+}
+
+.resources-page main { overflow: clip; }
+.resources-hero { padding-block: 76px 64px; background: #ffffff; }
+.resources-hero-inner { max-width: 980px; }
+.resources-hero .home-eyebrow { margin-bottom: 16px; }
+.resources-hero h1 { max-width: 900px; margin: 0; font-size: clamp(2.45rem, 5vw, 4rem); line-height: 1.12; }
+.resources-hero-inner > p:last-child { max-width: 740px; margin: 22px 0 0; color: var(--home-muted) !important; font-size: 1.08rem; }
+
+.resources-intro { padding-block: 30px; background: var(--home-surface); }
+.resources-intro p { max-width: 900px; margin: 0; color: var(--home-text); font-size: 1.02rem; }
+
+.resources-list-section { padding-block: 76px 88px; background: #ffffff; }
+.resources-list-heading { max-width: 760px; margin-bottom: 34px; }
+.resources-list-heading .home-eyebrow { margin-bottom: 10px; }
+.resources-list-heading h2,
+.resources-evaluator h2 { margin: 0; font-size: clamp(1.9rem, 3.6vw, 2.7rem); line-height: 1.2; }
+
+.resources-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); align-items: stretch; gap: 20px; }
+.resources-card { min-width: 0; display: flex; border: 1px solid var(--home-border); border-radius: 12px; background: #ffffff; box-shadow: 0 4px 16px rgba(21, 25, 34, .05); transition: transform 180ms ease, border-color 180ms ease, box-shadow 180ms ease; }
+.resources-card:hover { transform: translateY(-3px); border-color: #c8d5ed; box-shadow: 0 10px 24px rgba(21, 25, 34, .1); }
+.resources-card-content { flex: 1; display: flex; flex-direction: column; align-items: flex-start; padding: 26px; }
+.resources-category { margin: 0 0 10px; color: var(--home-blue) !important; font-size: .76rem; font-weight: 700; letter-spacing: .1em; text-transform: uppercase; }
+.resources-card h3 { margin: 0; font-size: 1.2rem; line-height: 1.35; }
+.resources-description { margin: 12px 0 18px; color: var(--home-muted) !important; font-size: .92rem; }
+.resources-type { margin: auto 0 14px; color: var(--home-muted) !important; font-size: .78rem; font-weight: 700; }
+.resources-download { width: 100%; }
+
+.resources-evaluator { padding-block: 72px; background: var(--home-surface); }
+.resources-evaluator-layout { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); align-items: center; gap: clamp(40px, 7vw, 88px); }
+.resources-evaluator-copy { max-width: 620px; }
+.resources-evaluator-copy .home-eyebrow { margin-bottom: 10px; }
+.resources-evaluator-copy > p:not(.home-eyebrow):not(.resources-evaluator-status) { margin: 16px 0 0; color: var(--home-muted) !important; }
+.resources-evaluator-status { width: fit-content; margin: 22px 0 0; padding: 12px 16px; border: 1px solid var(--home-border); border-radius: 8px; background: #eef1f5; color: #5e6470 !important; font-size: .88rem; font-weight: 700; }
+.resources-areas { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px; margin: 0; padding: 0; list-style: none; }
+.resources-areas li { min-height: 52px; display: flex; align-items: center; padding: 12px 14px; border: 1px solid var(--home-border); border-radius: 8px; background: #ffffff; color: var(--home-text); font-size: .88rem; font-weight: 600; }
+
+.resources-contact { padding-block: 72px; }
+.resources-contact h2 { font-size: clamp(1.9rem, 3.8vw, 2.8rem); }
+
+@media (max-width: 1023px) {
+  .resources-hero { padding-block: 64px 56px; }
+  .resources-evaluator-layout { gap: 36px; }
+}
+
+@media (max-width: 767px) {
+  .resources-hero { padding-block: 52px 44px; }
+  .resources-hero h1 { font-size: clamp(2.25rem, 9vw, 3.2rem); }
+  .resources-hero-inner > p:last-child { font-size: 1rem; }
+  .resources-intro { padding-block: 24px; }
+  .resources-list-section { padding-block: 60px 64px; }
+  .resources-grid { grid-template-columns: 1fr; gap: 16px; }
+  .resources-card-content { padding: 22px; }
+  .resources-evaluator { padding-block: 60px; }
+  .resources-evaluator-layout { grid-template-columns: 1fr; gap: 28px; }
+  .resources-areas { grid-template-columns: 1fr; }
+  .resources-contact { padding-block: 56px; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .resources-page *,
+  .resources-page *::before,
+  .resources-page *::after { transition-duration: 0.01ms !important; }
 }
 
 /* ── KYTECH ACOMPAÑAMIENTO PAGE ── */
