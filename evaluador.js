@@ -3,6 +3,7 @@
     {
       id: "presencia",
       name: "Presencia digital",
+    interest: "web",
       questions: [
         "¿Tu sitio explica claramente qué hace tu empresa y para quién?",
         "¿Tu sitio funciona correctamente en celular y tiene una acción clara para contactar?",
@@ -28,6 +29,7 @@
     {
       id: "microsoft365",
       name: "Microsoft 365",
+    interest: "microsoft365",
       questions: [
         "¿Cada persona utiliza una cuenta corporativa individual para trabajar?",
         "¿Usuarios, licencias y accesos se administran de forma ordenada?",
@@ -48,6 +50,7 @@
     {
       id: "colaboracion",
       name: "Organización y colaboración",
+    interest: "colaboracion",
       questions: [
         "¿El equipo sabe dónde debe guardar cada tipo de documento?",
         "¿Pueden identificar fácilmente cuál es la versión actual de un archivo compartido?",
@@ -68,6 +71,7 @@
     {
       id: "automatizacion",
       name: "Automatización",
+    interest: "automatizacion",
       questions: [
         "¿Tienen identificadas las tareas administrativas que se repiten frecuentemente?",
         "¿Los avisos, aprobaciones o actualizaciones repetitivas están automatizados cuando tiene sentido?",
@@ -88,6 +92,7 @@
     {
       id: "ia",
       name: "Inteligencia artificial",
+    interest: "ia",
       questions: [
         "¿Tienen casos concretos donde la inteligencia artificial aporte valor al trabajo diario?",
         "¿Está definido qué información puede y no puede utilizarse con herramientas de inteligencia artificial?",
@@ -108,6 +113,7 @@
     {
       id: "soporte",
       name: "Soporte y continuidad",
+    interest: "soporte",
       questions: [
         "¿Las personas saben a quién recurrir cuando tienen un problema tecnológico?",
         "¿Existe un proceso definido para altas, bajas y cambios de accesos?",
@@ -405,7 +411,7 @@
       makeElement("p", "", "Si querés, podemos ayudarte a convertir estas prioridades en un plan concreto.")
     );
     const contactLink = makeElement("a", "home-button", "Hablemos de tu proyecto →");
-    contactLink.href = "contacto.html";
+    contactLink.href = `contacto.html?interes=${encodeURIComponent(priorityResults[0].area.interest)}`;
     finalCta.append(contactLink);
 
     resultsContent.append(
