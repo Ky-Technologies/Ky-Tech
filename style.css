@@ -3,22 +3,22 @@
 @import url('https://fonts.googleapis.com/css2?family=Courier+Prime:ital,wght@0,400;0,700;1,400&family=Inter:wght@300;400;500;600;700&display=swap');
 
 :root {
-  --bg:           #e8f2fb;      /* celeste muy claro — fondo general */
-  --bg-dark:      #081d34;      /* azul muy oscuro premium — nav, footer, headers */
+  --bg:           #e8f2fb;      /* celeste muy claro Ã¢â‚¬â€ fondo general */
+  --bg-dark:      #081d34;      /* azul muy oscuro premium Ã¢â‚¬â€ nav, footer, headers */
   --bg-darker:    #04101e;      /* azul profundo para fondos de alto contraste */
-  --surface:      #ffffff;      /* blanco — cards */
-  --surface2:     #d6eaf8;      /* celeste suave — secciones alternadas */
+  --surface:      #ffffff;      /* blanco Ã¢â‚¬â€ cards */
+  --surface2:     #d6eaf8;      /* celeste suave Ã¢â‚¬â€ secciones alternadas */
   --border:       rgba(13,42,74,.12);
   --border-light: rgba(13,42,74,.07);
-  --accent:       #0284c7;      /* azul cian tecnológico — acento principal */
+  --accent:       #0284c7;      /* azul cian tecnolÃƒÂ³gico Ã¢â‚¬â€ acento principal */
   --accent-light: #38bdf8;      /* cian brillante para detalles y texto */
-  --accent-dark:  #0369a1;      /* azul oscuro — hover */
+  --accent-dark:  #0369a1;      /* azul oscuro Ã¢â‚¬â€ hover */
   --accent-glow:  rgba(2,132,199,.28);
   --accent-glow-strong: rgba(56,189,248,.38);
-  --dark:         #061829;      /* azul/negro — títulos principales */
-  --text:         #1a3a5c;      /* azul oscuro — texto de cuerpo */
-  --muted:        #4a6d8c;      /* azul medio-gris — texto secundario */
-  --muted-light:  #7aacc9;      /* azul claro — texto terciario */
+  --dark:         #061829;      /* azul/negro Ã¢â‚¬â€ tÃƒÂ­tulos principales */
+  --text:         #1a3a5c;      /* azul oscuro Ã¢â‚¬â€ texto de cuerpo */
+  --muted:        #4a6d8c;      /* azul medio-gris Ã¢â‚¬â€ texto secundario */
+  --muted-light:  #7aacc9;      /* azul claro Ã¢â‚¬â€ texto terciario */
   --white:        #ffffff;
   --font-head:    'Courier Prime', 'Courier New', monospace;
   --font-body:    'Inter', system-ui, sans-serif;
@@ -63,7 +63,7 @@ h1,h2,h3,h4 {
 
 p { color: var(--text); }
 
-/* ── TAG ── */
+/* Ã¢â€â‚¬Ã¢â€â‚¬ TAG Ã¢â€â‚¬Ã¢â€â‚¬ */
 .tag {
   display: inline-block;
   background: var(--accent);
@@ -91,7 +91,7 @@ p { color: var(--text); }
   line-height: 1.7;
 }
 
-/* ── BUTTONS ── */
+/* Ã¢â€â‚¬Ã¢â€â‚¬ BUTTONS Ã¢â€â‚¬Ã¢â€â‚¬ */
 .btn {
   display: inline-flex;
   align-items: center;
@@ -144,7 +144,7 @@ p { color: var(--text); }
   transform: translateY(-2px); 
 }
 
-/* ── LOGO BANNER (Desktop only, subtle branded header) ── */
+/* Ã¢â€â‚¬Ã¢â€â‚¬ LOGO BANNER (Desktop only, subtle branded header) Ã¢â€â‚¬Ã¢â€â‚¬ */
 .logo-banner {
   width: 100%;
   background: #020b14;
@@ -169,7 +169,7 @@ p { color: var(--text); }
   opacity: .95;
 }
 
-/* ── NAV — Sticky Glassmorphic Navigation Bar ── */
+/* Ã¢â€â‚¬Ã¢â€â‚¬ NAV Ã¢â‚¬â€ Sticky Glassmorphic Navigation Bar Ã¢â€â‚¬Ã¢â€â‚¬ */
 nav {
   position: fixed; top: 96px; left: 0; right: 0; z-index: 101;
   background: rgba(8, 29, 52, 0.85);
@@ -216,7 +216,7 @@ nav.scrolled {
 }
 .logo span { color: var(--accent-light); }
 
-/* ── WHATSAPP FLOTANTE CON MENÚ ── */
+/* Ã¢â€â‚¬Ã¢â€â‚¬ WHATSAPP FLOTANTE CON MENÃƒÅ¡ Ã¢â€â‚¬Ã¢â€â‚¬ */
 .wa-wrapper {
   position: fixed;
   bottom: 28px; right: 28px;
@@ -225,7 +225,7 @@ nav.scrolled {
   gap: 12px;
 }
 
-/* Menú desplegable */
+/* MenÃƒÂº desplegable */
 .wa-menu {
   background: #fff;
   border-radius: 16px;
@@ -285,7 +285,7 @@ nav.scrolled {
   margin-top: 2px;
 }
 
-/* Botón principal */
+/* BotÃƒÂ³n principal */
 .wa-float {
   display: inline-flex;
   align-items: center;
@@ -373,7 +373,7 @@ nav.scrolled {
 }
 .mobile-menu .btn { margin-top: 14px; width: 100%; justify-content: center; }
 
-/* ── PAGE HEADER ── */
+/* Ã¢â€â‚¬Ã¢â€â‚¬ PAGE HEADER Ã¢â€â‚¬Ã¢â€â‚¬ */
 .page-header {
   padding: 160px 0 60px;
   background: var(--bg-dark);
@@ -409,7 +409,7 @@ nav.scrolled {
 .page-header p { color: #a8c8e8; font-size: 1rem; max-width: 540px; }
 .page-header .tag { background: rgba(26,115,200,.2); color: #7dd4fc; border: 1px solid rgba(125,212,252,.3); }
 
-/* ── CTA BANNER ── */
+/* Ã¢â€â‚¬Ã¢â€â‚¬ CTA BANNER Ã¢â€â‚¬Ã¢â€â‚¬ */
 .cta-banner {
   background: var(--bg-dark);
   border-radius: var(--radius-lg);
@@ -422,10 +422,10 @@ nav.scrolled {
 .cta-banner p { color: #a8c8e8; margin-bottom: 28px; font-size: .97rem; }
 .cta-btns { display: flex; gap: 12px; justify-content: center; flex-wrap: wrap; }
 
-/* ── DIVIDER ── */
+/* Ã¢â€â‚¬Ã¢â€â‚¬ DIVIDER Ã¢â€â‚¬Ã¢â€â‚¬ */
 .divider { height: 1px; background: var(--border); margin: 0; }
 
-/* ── CARDS ── */
+/* Ã¢â€â‚¬Ã¢â€â‚¬ CARDS Ã¢â€â‚¬Ã¢â€â‚¬ */
 .card {
   background: var(--surface);
   border: 1px solid var(--border);
@@ -436,14 +436,14 @@ nav.scrolled {
 }
 .card:hover { transform: translateY(-4px); box-shadow: var(--shadow-lg); }
 
-/* ── FADE IN ── */
+/* Ã¢â€â‚¬Ã¢â€â‚¬ FADE IN Ã¢â€â‚¬Ã¢â€â‚¬ */
 .fade-in {
   opacity: 0; transform: translateY(20px);
   transition: opacity .65s ease, transform .65s ease;
 }
 .fade-in.visible { opacity: 1; transform: none; }
 
-/* ── FOOTER ── */
+/* Ã¢â€â‚¬Ã¢â€â‚¬ FOOTER Ã¢â€â‚¬Ã¢â€â‚¬ */
 footer {
   background: var(--bg-dark);
   border-top: 3px solid var(--accent);
@@ -539,7 +539,7 @@ footer {
   .footer-bottom { flex-direction: column; text-align: center; }
 }
 
-/* ── RESPONSIVE ── */
+/* Ã¢â€â‚¬Ã¢â€â‚¬ RESPONSIVE Ã¢â€â‚¬Ã¢â€â‚¬ */
 @media (max-width: 900px) {
   .logo-banner {
     display: none !important;
@@ -593,7 +593,7 @@ footer {
   .section-title { font-size: 1.8rem; }
 }
 
-/* ── KYTECH HOME REDESIGN ── */
+/* Ã¢â€â‚¬Ã¢â€â‚¬ KYTECH HOME REDESIGN Ã¢â€â‚¬Ã¢â€â‚¬ */
 .home-page {
   --home-bg: #ffffff;
   --home-surface: #f6f7f9;
@@ -1261,7 +1261,7 @@ footer {
 }
 
 .home-process-list li:not(:last-child)::after {
-  content: "→";
+  content: "Ã¢â€ â€™";
   position: absolute;
   top: 22px;
   right: 12px;
@@ -1428,7 +1428,7 @@ footer {
     row-gap: 24px;
   }
   .home-process-list li:nth-child(2)::after {
-    content: "↓";
+    content: "Ã¢â€ â€œ";
     top: auto;
     right: 22px;
     bottom: 0;
@@ -1524,7 +1524,7 @@ footer {
   .home-process-list li + li { padding: 18px 0 0; }
   .home-process-number { margin-bottom: 12px; }
   .home-process-list li:not(:last-child)::after {
-    content: "↓";
+    content: "Ã¢â€ â€œ";
     top: 14px;
     right: 4px;
   }
@@ -1698,7 +1698,7 @@ footer {
   .resources-page *::after { transition-duration: 0.01ms !important; }
 }
 
-/* ── KYTECH ACOMPAÑAMIENTO PAGE ── */
+/* Ã¢â€â‚¬Ã¢â€â‚¬ KYTECH ACOMPAÃƒâ€˜AMIENTO PAGE Ã¢â€â‚¬Ã¢â€â‚¬ */
 .acomp-page {
   --acomp-bg: #ffffff;
   --acomp-surface: #f6f7f9;
@@ -1997,7 +1997,7 @@ footer {
 .acomp-faq-list summary { position: relative; padding: 22px 36px 22px 0; cursor: pointer; font-weight: 700; list-style: none; }
 .acomp-faq-list summary::-webkit-details-marker { display: none; }
 .acomp-faq-list summary::after { content: "+"; position: absolute; top: 17px; right: 2px; color: var(--acomp-blue); font-size: 1.35rem; font-weight: 400; }
-.acomp-faq-list details[open] summary::after { content: "−"; }
+.acomp-faq-list details[open] summary::after { content: "Ã¢Ë†â€™"; }
 .acomp-faq-list details p { max-width: 620px; margin: -4px 34px 22px 0; color: var(--acomp-muted); }
 
 .acomp-closing { padding-block: 76px; background: var(--acomp-dark); color: #ffffff; }
@@ -2275,7 +2275,7 @@ footer {
 .servi-faq-list summary { position: relative; padding: 22px 38px 22px 0; cursor: pointer; font-weight: 700; list-style: none; }
 .servi-faq-list summary::-webkit-details-marker { display: none; }
 .servi-faq-list summary::after { content: "+"; position: absolute; top: 16px; right: 2px; color: var(--servi-blue); font-size: 1.35rem; font-weight: 400; }
-.servi-faq-list details[open] summary::after { content: "−"; }
+.servi-faq-list details[open] summary::after { content: "Ã¢Ë†â€™"; }
 .servi-faq-list details p { max-width: 620px; margin: -4px 34px 22px 0; color: var(--servi-muted); }
 
 .servi-projects { padding-block: 88px; background: #ffffff; }
@@ -2459,7 +2459,7 @@ footer {
   }
 }
 
-/* ── KYTECH CÓMO TRABAJAMOS PAGE ── */
+/* Ã¢â€â‚¬Ã¢â€â‚¬ KYTECH CÃƒâ€œMO TRABAJAMOS PAGE Ã¢â€â‚¬Ã¢â€â‚¬ */
 .como-page {
   --como-surface: #f6f7f9;
   --como-text: #181a1f;
@@ -2720,7 +2720,7 @@ footer {
 .como-faq-list summary { position: relative; padding: 22px 36px 22px 0; cursor: pointer; font-weight: 700; list-style: none; }
 .como-faq-list summary::-webkit-details-marker { display: none; }
 .como-faq-list summary::after { position: absolute; top: 17px; right: 2px; color: var(--como-blue); font-size: 1.35rem; font-weight: 400; content: "+"; }
-.como-faq-list details[open] summary::after { content: "−"; }
+.como-faq-list details[open] summary::after { content: "Ã¢Ë†â€™"; }
 .como-faq-list details p { max-width: 620px; margin: -4px 34px 22px 0; color: var(--como-muted); }
 
 .como-closing { padding-block: 76px; background: var(--como-dark); color: #ffffff; }
@@ -2841,7 +2841,7 @@ footer {
   }
 }
 
-/* ── KYTECH CONTACT PAGE ── */
+/* Ã¢â€â‚¬Ã¢â€â‚¬ KYTECH CONTACT PAGE Ã¢â€â‚¬Ã¢â€â‚¬ */
 .contact-page {
   --contact-surface: #f6f7f9;
   --contact-text: #181a1f;
@@ -3104,7 +3104,7 @@ footer {
 .contact-faq-list summary { position: relative; padding: 22px 36px 22px 0; cursor: pointer; font-weight: 700; list-style: none; }
 .contact-faq-list summary::-webkit-details-marker { display: none; }
 .contact-faq-list summary::after { position: absolute; top: 17px; right: 2px; color: var(--contact-blue); font-size: 1.35rem; font-weight: 400; content: "+"; }
-.contact-faq-list details[open] summary::after { content: "−"; }
+.contact-faq-list details[open] summary::after { content: "Ã¢Ë†â€™"; }
 .contact-faq-list details p { max-width: 620px; margin: -4px 34px 22px 0; color: var(--contact-muted); }
 
 .contact-closing { padding-block: 76px; background: var(--contact-dark); color: #ffffff; }
@@ -3234,7 +3234,7 @@ footer {
   }
 }
 
-/* ── KYTECH GLOBAL WHATSAPP CONTACT ── */
+/* Ã¢â€â‚¬Ã¢â€â‚¬ KYTECH GLOBAL WHATSAPP CONTACT Ã¢â€â‚¬Ã¢â€â‚¬ */
 .ky-whatsapp-float {
   position: fixed;
   right: 24px;
@@ -3286,9 +3286,9 @@ footer {
   .ky-whatsapp-float { transition-duration: 0.01ms; }
 }
 
-/* ── KYTECH DESIGN SYSTEM · FASE A ──
-   Capa de normalización segura. No elimina ni sustituye reglas existentes.
-   Los alias por página conservan compatibilidad con los componentes actuales.
+/* Ã¢â€â‚¬Ã¢â€â‚¬ KYTECH DESIGN SYSTEM Ã‚Â· FASE A Ã¢â€â‚¬Ã¢â€â‚¬
+   Capa de normalizaciÃƒÂ³n segura. No elimina ni sustituye reglas existentes.
+   Los alias por pÃƒÂ¡gina conservan compatibilidad con los componentes actuales.
 */
 :root {
   --ky-white: #ffffff;
@@ -3325,7 +3325,7 @@ footer {
   --ky-motion-card: 300ms;
 }
 
-/* Alias de compatibilidad para las páginas modernas */
+/* Alias de compatibilidad para las pÃƒÂ¡ginas modernas */
 .home-page {
   --home-bg: var(--ky-white);
   --home-surface: var(--ky-surface);
@@ -3376,7 +3376,7 @@ footer {
   --contact-dark: var(--ky-dark);
 }
 
-/* Contenedores: Servicios se alinea al ancho de las demás páginas modernas. */
+/* Contenedores: Servicios se alinea al ancho de las demÃƒÂ¡s pÃƒÂ¡ginas modernas. */
 .home-container,
 .acomp-container,
 .como-container,
@@ -3386,7 +3386,7 @@ footer {
   max-width: var(--ky-container);
 }
 
-/* Alturas y radios compartidos sin cambiar la jerarquía de componentes. */
+/* Alturas y radios compartidos sin cambiar la jerarquÃƒÂ­a de componentes. */
 .home-nav-cta,
 .acomp-nav-cta,
 .servi-nav-cta,
@@ -3455,5 +3455,460 @@ footer {
   :root {
     --ky-motion-fast: 0.01ms;
     --ky-motion-card: 0.01ms;
+  }
+}
+
+/* Ã¢â€â‚¬Ã¢â€â‚¬ KYTECH DESIGN SYSTEM Ã‚Â· FASE B PILOTO SERVICIOS Ã¢â€â‚¬Ã¢â€â‚¬
+   Normaliza exclusivamente el ritmo vertical de Servicios.
+   No altera tipografia, contenido, interacciones ni estructura HTML.
+*/
+.servi-page {
+  --servi-section-space: var(--ky-space-section);
+  --servi-compact-space: var(--ky-space-compact);
+  --servi-cta-space: var(--ky-space-cta);
+  --servi-heading-gap: 32px;
+}
+
+/* Bloques principales */
+.servi-featured,
+.servi-group,
+.servi-decisions,
+.servi-faq,
+.servi-projects {
+  padding-block: var(--servi-section-space);
+}
+
+/* Bloques deliberadamente mas compactos */
+.servi-flexible {
+  padding-block: var(--servi-compact-space);
+}
+
+.servi-closing {
+  padding-block: var(--servi-cta-space);
+}
+
+/* Acerca encabezados y contenido asociado. */
+.servi-group-heading,
+.servi-projects-heading {
+  margin-bottom: var(--servi-heading-gap);
+}
+
+/* La seccion destacada conserva jerarquia, pero usa el mismo ritmo base. */
+.servi-featured-layout {
+  gap: clamp(40px, 6vw, 88px);
+}
+
+/* Creamos: separacion consistente entre sus dos tarjetas. */
+.servi-create-grid {
+  gap: 24px;
+}
+
+/* Construimos: distancia controlada entre filas/columnas. */
+.servi-work-grid {
+  column-gap: 24px;
+  row-gap: 18px;
+}
+
+/* Crecemos: reduce el vacio entre texto y tarjeta de soporte. */
+.servi-grow-layout {
+  gap: clamp(40px, 6vw, 88px);
+}
+
+/* Secciones de dos columnas del tramo inferior. */
+.servi-flexible-inner,
+.servi-faq-layout {
+  gap: clamp(40px, 6vw, 88px);
+}
+
+@media (max-width: 1023px) {
+  .servi-page {
+    --servi-heading-gap: 28px;
+  }
+
+  .servi-featured-layout,
+  .servi-grow-layout,
+  .servi-flexible-inner,
+  .servi-faq-layout {
+    gap: 32px;
+  }
+}
+
+@media (max-width: 767px) {
+  .servi-page {
+    --servi-section-space: var(--ky-space-section-mobile);
+    --servi-compact-space: var(--ky-space-compact-mobile);
+    --servi-cta-space: var(--ky-space-cta-mobile);
+    --servi-heading-gap: 28px;
+  }
+
+  .servi-create-grid,
+  .servi-work-grid {
+    gap: 16px;
+  }
+}
+
+/* Ã¢â€â‚¬Ã¢â€â‚¬ KYTECH DESIGN SYSTEM Ã‚Â· FASE B HOME Ã¢â€â‚¬Ã¢â€â‚¬
+   Normaliza exclusivamente el ritmo vertical de Home.
+   Conserva contenido, tipografia, flip cards, overlays e interacciones.
+*/
+.home-page {
+  --home-section-space: var(--ky-space-section);
+  --home-compact-space: var(--ky-space-compact);
+  --home-cta-space: var(--ky-space-cta);
+  --home-heading-gap: 32px;
+}
+
+/* Ritmo comun de las secciones principales. */
+.home-section {
+  padding-block: var(--home-section-space);
+}
+
+/* Acerca encabezados y contenido relacionado. */
+.home-section-heading,
+.home-services-heading,
+.home-process-heading {
+  margin-bottom: var(--home-heading-gap);
+}
+
+/* Bloque de acompanamiento: conserva jerarquia con un gap mas consistente. */
+.home-accompaniment-layout {
+  gap: clamp(40px, 6vw, 88px);
+}
+
+/* Servicios: separacion interna consistente sin cambiar las tarjetas. */
+.home-service-groups {
+  gap: 16px;
+}
+
+.home-startup-service {
+  margin-bottom: 16px;
+}
+
+/* Portfolio: mantiene overlay y tarjetas, solo normaliza separacion. */
+.home-project-grid {
+  gap: 24px;
+}
+
+.home-projects-link {
+  margin-top: 24px;
+}
+
+/* Por que KyTech: respeta las flip cards actuales y su densidad. */
+.home-why-grid {
+  gap: 18px;
+}
+
+/* Recursos es una banda compacta entre secciones mayores. */
+.home-resource-invite {
+  padding-block: var(--home-compact-space);
+}
+
+/* CTA final usa el token de banda del sistema. */
+.home-contact {
+  padding-block: var(--home-cta-space);
+}
+
+@media (max-width: 1023px) {
+  .home-page {
+    --home-heading-gap: 28px;
+  }
+
+  .home-accompaniment-layout {
+    gap: 32px;
+  }
+}
+
+@media (max-width: 767px) {
+  .home-page {
+    --home-section-space: var(--ky-space-section-mobile);
+    --home-compact-space: var(--ky-space-compact-mobile);
+    --home-cta-space: var(--ky-space-cta-mobile);
+    --home-heading-gap: 28px;
+  }
+
+  .home-service-groups,
+  .home-project-grid,
+  .home-why-grid {
+    gap: 16px;
+  }
+
+  .home-startup-service {
+    margin-bottom: 16px;
+  }
+}
+
+/* Ã¢â€â‚¬Ã¢â€â‚¬ KYTECH DESIGN SYSTEM Ã‚Â· FASE B HOME Ã‚Â· REFINAMIENTO RECURSOS/PROCESO Ã¢â€â‚¬Ã¢â€â‚¬
+   Reduce unicamente el vacio acumulado entre la banda de Recursos y Como trabajamos.
+*/
+.home-resource-invite {
+  padding-block: 48px;
+}
+
+.home-process.home-section {
+  padding-top: 64px;
+}
+
+@media (max-width: 767px) {
+  .home-resource-invite {
+    padding-block: 40px;
+  }
+
+  .home-process.home-section {
+    padding-top: 48px;
+  }
+}
+
+/* Ã¢â€â‚¬Ã¢â€â‚¬ KYTECH DESIGN SYSTEM Ã‚Â· FASE B ACOMPANAMIENTO Ã¢â€â‚¬Ã¢â€â‚¬
+   Normaliza exclusivamente el ritmo vertical de Acompanamiento.
+   Conserva contenido, tipografia, flip cards e interacciones.
+*/
+.acomp-page {
+  --acomp-section-space: var(--ky-space-section);
+  --acomp-compact-space: var(--ky-space-compact);
+  --acomp-cta-space: var(--ky-space-cta);
+  --acomp-heading-gap: 32px;
+}
+
+/* Ritmo principal de las secciones de contenido. */
+.acomp-section {
+  padding-block: var(--acomp-section-space);
+}
+
+/* Acerca encabezados y contenido asociado. */
+.acomp-section-heading {
+  margin-bottom: var(--acomp-heading-gap);
+}
+
+/* Situaciones: las flip cards mantienen su geometria; solo se normaliza su separacion. */
+.acomp-situation-list {
+  gap: 18px;
+}
+
+/* Bloques de dos columnas: reduce los gaps historicos de hasta 112px. */
+.acomp-system-layout,
+.acomp-flexible-inner,
+.acomp-faq-layout {
+  gap: clamp(40px, 6vw, 88px);
+}
+
+/* Como empezamos: conserva las cuatro etapas, con ritmo mas cercano al sistema. */
+.acomp-start-list {
+  margin-top: 0;
+}
+
+/* A tu ritmo funciona como bloque de respiracion compacta. */
+.acomp-flexible {
+  padding-block: var(--acomp-compact-space);
+}
+
+/* Cierre alineado al CTA global. */
+.acomp-closing {
+  padding-block: var(--acomp-cta-space);
+}
+
+@media (max-width: 1023px) {
+  .acomp-page {
+    --acomp-heading-gap: 28px;
+  }
+
+  .acomp-system-layout,
+  .acomp-flexible-inner,
+  .acomp-faq-layout {
+    gap: 32px;
+  }
+}
+
+@media (max-width: 767px) {
+  .acomp-page {
+    --acomp-section-space: var(--ky-space-section-mobile);
+    --acomp-compact-space: var(--ky-space-compact-mobile);
+    --acomp-cta-space: var(--ky-space-cta-mobile);
+    --acomp-heading-gap: 28px;
+  }
+
+  .acomp-situation-list {
+    gap: 14px;
+  }
+}
+
+/* Ã¢â€â‚¬Ã¢â€â‚¬ KYTECH DESIGN SYSTEM Ã‚Â· FASE B COMO TRABAJAMOS Ã¢â€â‚¬Ã¢â€â‚¬
+   Normaliza exclusivamente el ritmo vertical de Como trabajamos.
+   Conserva contenido, tipografia, estructura e interacciones.
+*/
+.como-page {
+  --como-section-space: var(--ky-space-section);
+  --como-compact-space: var(--ky-space-compact);
+  --como-cta-space: var(--ky-space-cta);
+  --como-heading-gap: 32px;
+}
+
+/* Secciones principales que historicamente usaban 104Ã¢â‚¬â€œ112px. */
+.como-understand,
+.como-communication,
+.como-inputs,
+.como-method,
+.como-collaboration,
+.como-small-start,
+.como-faq {
+  padding-block: var(--como-section-space);
+}
+
+/* Encabezados mas proximos a su contenido. */
+.como-section-heading,
+.como-method-heading,
+.como-collaboration-heading,
+.como-inputs .como-section-heading {
+  margin-bottom: var(--como-heading-gap);
+}
+
+/* Metodo: compacta filas sin alterar su estructura de tres columnas. */
+.como-method-item {
+  padding-block: 32px;
+  gap: clamp(24px, 4vw, 56px);
+}
+
+/* Composiciones en dos columnas alineadas al gap del sistema. */
+.como-communication-layout,
+.como-small-start-layout,
+.como-faq-layout {
+  gap: clamp(40px, 6vw, 88px);
+}
+
+/* Colaboracion: conserva el mapa, reduciendo solo el aire exterior. */
+.como-collaboration-side {
+  min-height: 280px;
+}
+
+/* Cierre alineado a la banda CTA global. */
+.como-closing {
+  padding-block: var(--como-cta-space);
+}
+
+@media (max-width: 1023px) {
+  .como-page {
+    --como-heading-gap: 28px;
+  }
+
+  .como-communication-layout,
+  .como-small-start-layout,
+  .como-faq-layout {
+    gap: 32px;
+  }
+
+  .como-method-item {
+    gap: 28px;
+  }
+}
+
+@media (max-width: 767px) {
+  .como-page {
+    --como-section-space: var(--ky-space-section-mobile);
+    --como-compact-space: var(--ky-space-compact-mobile);
+    --como-cta-space: var(--ky-space-cta-mobile);
+    --como-heading-gap: 28px;
+  }
+
+  .como-method-item {
+    padding-block: 28px;
+  }
+
+  .como-collaboration-side {
+    min-height: 0;
+  }
+}
+
+/* Ã¢â€â‚¬Ã¢â€â‚¬ KYTECH Ã‚Â· AISLAMIENTO FOOTER MODERNO Ã¢â€â‚¬Ã¢â€â‚¬
+   Evita que las reglas globales legacy de nav/footer interfieran con Recursos.
+*/
+.resources-page .home-footer {
+  position: relative;
+  overflow: visible;
+  padding: 0;
+  border-top: 0;
+  background: var(--home-bg, #ffffff);
+}
+
+.resources-page .home-footer-links {
+  position: static;
+  inset: auto;
+  z-index: auto;
+  width: auto;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  box-shadow: none;
+  backdrop-filter: none;
+  -webkit-backdrop-filter: none;
+}
+
+/* Ã¢â€â‚¬Ã¢â€â‚¬ KYTECH DESIGN SYSTEM Ã‚Â· FASE B RECURSOS Ã¢â€â‚¬Ã¢â€â‚¬
+   Normaliza el ritmo vertical de Recursos sin compactar tarjetas ni Evaluador.
+*/
+.resources-page {
+  --resources-section-space: var(--ky-space-section);
+  --resources-compact-space: var(--ky-space-compact);
+  --resources-cta-space: var(--ky-space-cta);
+  --resources-heading-gap: 32px;
+}
+
+/* Hero conserva su jerarquia visual actual. */
+.resources-hero {
+  padding-block: 76px 64px;
+}
+
+/* Introduccion breve entre hero y biblioteca. */
+.resources-intro {
+  padding-block: 30px;
+}
+
+/* Biblioteca principal alineada al ritmo de seccion del sistema. */
+.resources-list-section {
+  padding-block: var(--resources-section-space);
+}
+
+.resources-list-heading {
+  margin-bottom: var(--resources-heading-gap);
+}
+
+/* El grid y el interior de las tarjetas permanecen deliberadamente intactos. */
+.resources-grid {
+  gap: 20px;
+}
+
+/* Herramienta destacada: conserva respiracion propia. */
+.resources-evaluator {
+  padding-block: var(--resources-cta-space);
+}
+
+/* CTA final alineado a las bandas principales del sistema. */
+.resources-contact {
+  padding-block: var(--resources-cta-space);
+}
+
+@media (max-width: 1023px) {
+  .resources-page {
+    --resources-heading-gap: 28px;
+  }
+}
+
+@media (max-width: 767px) {
+  .resources-page {
+    --resources-section-space: var(--ky-space-section-mobile);
+    --resources-compact-space: var(--ky-space-compact-mobile);
+    --resources-cta-space: var(--ky-space-cta-mobile);
+    --resources-heading-gap: 28px;
+  }
+
+  .resources-list-section {
+    padding-block: var(--resources-section-space);
+  }
+
+  .resources-grid {
+    gap: 16px;
+  }
+
+  .resources-evaluator,
+  .resources-contact {
+    padding-block: var(--resources-cta-space);
   }
 }
