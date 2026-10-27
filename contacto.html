@@ -33,6 +33,23 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="style.css?v=14" />
+  <style>
+    .contact-choice-group { margin: 0; padding: 0; border: 0; }
+    .contact-choice-group + .contact-choice-group { margin-top: 26px; }
+    .contact-choice-group legend { margin-bottom: 12px; color: var(--contact-text); font-size: .92rem; font-weight: 700; }
+    .contact-required { color: var(--contact-blue); }
+    .contact-choice-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px; }
+    .contact-choice { position: relative; display: block; }
+    .contact-choice input { position: absolute; width: 1px; height: 1px; margin: -1px; overflow: hidden; clip: rect(0 0 0 0); clip-path: inset(50%); white-space: nowrap; }
+    .contact-choice span { min-height: 54px; display: flex; align-items: center; padding: 13px 14px 13px 42px; border: 1px solid var(--contact-border); border-radius: 9px; background: #fff; color: var(--contact-text); font-size: .88rem; font-weight: 600; cursor: pointer; transition: border-color 160ms ease, background 160ms ease, box-shadow 160ms ease; }
+    .contact-choice span::before { content: ''; position: absolute; left: 14px; top: 50%; width: 16px; height: 16px; border: 2px solid #a7afbd; border-radius: 50%; transform: translateY(-50%); background: #fff; }
+    .contact-choice input:checked + span { border-color: var(--contact-blue); background: #f4f2ff; box-shadow: 0 0 0 1px var(--contact-blue); }
+    .contact-choice input:checked + span::before { border: 5px solid var(--contact-blue); }
+    .contact-choice input:focus-visible + span { outline: 3px solid rgba(80, 51, 255, .28); outline-offset: 2px; }
+    .contact-choice-note { margin: 10px 0 0; color: var(--contact-muted); font-size: .8rem; }
+    @media (max-width: 700px) { .contact-choice-grid { grid-template-columns: 1fr; } }
+    @media (prefers-reduced-motion: reduce) { .contact-choice span { transition-duration: .01ms; } }
+  </style>
 </head>
 <body class="contact-page">
   <a class="contact-skip" href="#contenido">Saltar al contenido</a>
@@ -107,23 +124,29 @@
             </div>
           </div>
 
-          <div class="contact-field">
-            <label for="contact-service">¿En qué podemos ayudarte? <span aria-hidden="true">*</span></label>
-            <select id="contact-service" name="service" required>
-              <option value="" selected disabled>Selecciona una opción</option>
-              <option>Acompañamiento digital</option>
-              <option>Web corporativa</option>
-              <option>SEO</option>
-              <option>Microsoft 365</option>
-              <option>Trabajo colaborativo</option>
-              <option>Automatización</option>
-              <option>IA aplicada al negocio</option>
-              <option>Soporte tecnológico</option>
-              <option>No estoy seguro todavía</option>
-              <option>Otro</option>
-            </select>
-          </div>
-
+          <fieldset class="contact-choice-group">
+            <legend>¿En qué podemos ayudarte? <span class="contact-required" aria-hidden="true">*</span></legend>
+            <div class="contact-choice-grid">
+              <label class="contact-choice"><input type="radio" name="service" value="Web corporativa" required /><span>Crear o mejorar una web</span></label>
+              <label class="contact-choice"><input type="radio" name="service" value="SEO" /><span>Mejorar posicionamiento SEO</span></label>
+              <label class="contact-choice"><input type="radio" name="service" value="Microsoft 365" /><span>Organizar Microsoft 365</span></label>
+              <label class="contact-choice"><input type="radio" name="service" value="Trabajo colaborativo" /><span>Ordenar archivos y colaboración</span></label>
+              <label class="contact-choice"><input type="radio" name="service" value="Automatización" /><span>Automatizar tareas</span></label>
+              <label class="contact-choice"><input type="radio" name="service" value="IA aplicada al negocio" /><span>Incorporar inteligencia artificial</span></label>
+              <label class="contact-choice"><input type="radio" name="service" value="Soporte tecnológico" /><span>Soporte tecnológico</span></label>
+              <label class="contact-choice"><input type="radio" name="service" value="No estoy seguro todavía" /><span>Todavía no lo sé</span></label>
+            </div>
+            <p class="contact-choice-note">Elegí la opción más cercana. Después podés ampliar la información en el mensaje.</p>
+          </fieldset>
+          <fieldset class="contact-choice-group">
+            <legend>¿En qué situación estás? <span class="contact-required" aria-hidden="true">*</span></legend>
+            <div class="contact-choice-grid">
+              <label class="contact-choice"><input type="radio" name="situation" value="Tengo una idea y quiero empezar" required /><span>Tengo una idea y quiero empezar</span></label>
+              <label class="contact-choice"><input type="radio" name="situation" value="Ya tengo algo funcionando y quiero mejorarlo" /><span>Ya tengo algo funcionando y quiero mejorarlo</span></label>
+              <label class="contact-choice"><input type="radio" name="situation" value="Mi empresa está creciendo y necesito ordenar" /><span>Mi empresa está creciendo y necesito ordenar</span></label>
+              <label class="contact-choice"><input type="radio" name="situation" value="Tengo un problema concreto" /><span>Tengo un problema concreto</span></label>
+            </div>
+          </fieldset>
           <div class="contact-field">
             <label for="contact-message">Cuéntanos brevemente qué necesitas <span aria-hidden="true">*</span></label>
             <textarea id="contact-message" name="message" placeholder="Cuéntanos qué estás construyendo, qué necesitas resolver o qué te gustaría mejorar." required></textarea>
@@ -333,7 +356,7 @@
     (() => {
       const menuButton = document.querySelector('.contact-menu-button');
       const mobileMenu = document.getElementById('contact-mobile-menu');
-      const serviceSelect = document.getElementById('contact-service');
+      const serviceInputs = [...document.querySelectorAll('input[name="service"]')];
       const whatsappFloat = document.querySelector('.ky-whatsapp-float');
       const formHeading = document.querySelector('.contact-form-heading');
       const contactForm = document.querySelector('.contact-form');
@@ -369,11 +392,29 @@
 
         gtag('event', 'contact_whatsapp');
       });
+      const interestMap = {
+        web: 'Web corporativa',
+        seo: 'SEO',
+        microsoft365: 'Microsoft 365',
+        colaboracion: 'Trabajo colaborativo',
+        automatizacion: 'Automatización',
+        ia: 'IA aplicada al negocio',
+        soporte: 'Soporte tecnológico',
+        acompanamiento: 'No estoy seguro todavía'
+      };
+      function selectService(value) {
+        const option = serviceInputs.find((input) => input.value === value);
+        if (!option) return;
+        option.checked = true;
+        option.dispatchEvent(new Event('change', { bubbles: true }));
+      }
       document.querySelectorAll('.contact-topic-list a').forEach((link) => {
-        link.addEventListener('click', () => {
-          serviceSelect.value = link.dataset.service;
-        });
+        link.addEventListener('click', () => selectService(link.dataset.service));
       });
+      const requestedInterest = new URLSearchParams(window.location.search).get('interes');
+      if (requestedInterest) {
+        selectService(interestMap[requestedInterest.toLowerCase()] || requestedInterest);
+      }
 
       contactForm.addEventListener('submit', async (event) => {
         event.preventDefault();
