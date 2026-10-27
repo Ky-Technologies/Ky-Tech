@@ -3285,3 +3285,175 @@ footer {
 @media (prefers-reduced-motion: reduce) {
   .ky-whatsapp-float { transition-duration: 0.01ms; }
 }
+
+/* ── KYTECH DESIGN SYSTEM · FASE A ──
+   Capa de normalización segura. No elimina ni sustituye reglas existentes.
+   Los alias por página conservan compatibilidad con los componentes actuales.
+*/
+:root {
+  --ky-white: #ffffff;
+  --ky-surface: #f6f7f9;
+  --ky-surface-strong: #eef1f5;
+  --ky-text: #181a1f;
+  --ky-muted: #5e6470;
+  --ky-border: #dde1e7;
+  --ky-primary: #2563eb;
+  --ky-primary-hover: #1d4ed8;
+  --ky-dark: #151922;
+
+  --ky-radius-control: 8px;
+  --ky-radius-card: 12px;
+  --ky-radius-feature: 16px;
+  --ky-radius-pill: 999px;
+
+  --ky-shadow-card: 0 4px 16px rgba(21, 25, 34, .05);
+  --ky-shadow-hover: 0 10px 24px rgba(21, 25, 34, .10);
+  --ky-shadow-feature: 0 18px 48px rgba(21, 25, 34, .08);
+
+  --ky-container: 1280px;
+  --ky-space-section: 88px;
+  --ky-space-compact: 64px;
+  --ky-space-cta: 72px;
+  --ky-space-section-mobile: 64px;
+  --ky-space-compact-mobile: 48px;
+  --ky-space-cta-mobile: 56px;
+
+  --ky-control-height: 44px;
+  --ky-action-height: 48px;
+
+  --ky-motion-fast: 160ms;
+  --ky-motion-card: 300ms;
+}
+
+/* Alias de compatibilidad para las páginas modernas */
+.home-page {
+  --home-bg: var(--ky-white);
+  --home-surface: var(--ky-surface);
+  --home-surface-strong: var(--ky-surface-strong);
+  --home-text: var(--ky-text);
+  --home-muted: var(--ky-muted);
+  --home-border: var(--ky-border);
+  --home-blue: var(--ky-primary);
+  --home-blue-hover: var(--ky-primary-hover);
+  --home-dark: var(--ky-dark);
+  --home-max: var(--ky-container);
+}
+
+.acomp-page {
+  --acomp-bg: var(--ky-white);
+  --acomp-surface: var(--ky-surface);
+  --acomp-text: var(--ky-text);
+  --acomp-muted: var(--ky-muted);
+  --acomp-border: var(--ky-border);
+  --acomp-blue: var(--ky-primary);
+  --acomp-dark: var(--ky-dark);
+}
+
+.servi-page {
+  --servi-surface: var(--ky-surface);
+  --servi-text: var(--ky-text);
+  --servi-muted: var(--ky-muted);
+  --servi-border: var(--ky-border);
+  --servi-blue: var(--ky-primary);
+  --servi-dark: var(--ky-dark);
+}
+
+.como-page {
+  --como-surface: var(--ky-surface);
+  --como-text: var(--ky-text);
+  --como-muted: var(--ky-muted);
+  --como-border: var(--ky-border);
+  --como-blue: var(--ky-primary);
+  --como-dark: var(--ky-dark);
+}
+
+.contact-page {
+  --contact-surface: var(--ky-surface);
+  --contact-text: var(--ky-text);
+  --contact-muted: var(--ky-muted);
+  --contact-border: var(--ky-border);
+  --contact-blue: var(--ky-primary);
+  --contact-dark: var(--ky-dark);
+}
+
+/* Contenedores: Servicios se alinea al ancho de las demás páginas modernas. */
+.home-container,
+.acomp-container,
+.como-container,
+.contact-container,
+.servi-container,
+.servi-header .servi-header-inner {
+  max-width: var(--ky-container);
+}
+
+/* Alturas y radios compartidos sin cambiar la jerarquía de componentes. */
+.home-nav-cta,
+.acomp-nav-cta,
+.servi-nav-cta,
+.como-nav-cta,
+.contact-nav-cta,
+.home-menu-button,
+.acomp-menu-button,
+.servi-menu-button,
+.como-menu-button,
+.contact-menu-button {
+  min-height: var(--ky-control-height);
+  border-radius: var(--ky-radius-control);
+}
+
+.home-button,
+.acomp-button,
+.servi-button,
+.como-button,
+.contact-button-light {
+  min-height: var(--ky-action-height);
+  border-radius: var(--ky-radius-control);
+}
+
+/* Familias de tarjeta del sistema actual. */
+.home-project-card,
+.resources-card,
+.evaluator-priority,
+.evaluator-map,
+.evaluator-final-cta,
+.servi-project-card {
+  border-color: var(--ky-border);
+  border-radius: var(--ky-radius-card);
+}
+
+.home-project-card,
+.resources-card,
+.servi-project-card {
+  box-shadow: var(--ky-shadow-card);
+}
+
+.home-project-card:hover,
+.resources-card:hover,
+.servi-project-card:hover {
+  box-shadow: var(--ky-shadow-hover);
+}
+
+.home-accompaniment-layout,
+.resources-evaluator-app,
+.contact-form-card {
+  border-radius: var(--ky-radius-feature);
+}
+
+.contact-form-card {
+  box-shadow: var(--ky-shadow-feature);
+}
+
+@media (max-width: 767px) {
+  :root {
+    --ky-space-section: var(--ky-space-section-mobile);
+    --ky-space-compact: var(--ky-space-compact-mobile);
+    --ky-space-cta: var(--ky-space-cta-mobile);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  :root {
+    --ky-motion-fast: 0.01ms;
+    --ky-motion-card: 0.01ms;
+  }
+}
