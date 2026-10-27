@@ -32,7 +32,8 @@
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700&display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="style.css?v=13" />
+  <link rel="stylesheet" href="style.css?v=14" />
+  <script src="evaluador.js?v=1" defer></script>
   <script type="application/ld+json">
   {
     "@context": "https://schema.org",
@@ -177,22 +178,34 @@
       </div>
     </section>
 
-    <section class="resources-evaluator" aria-labelledby="evaluator-title">
-      <div class="home-container resources-evaluator-layout">
-        <div class="resources-evaluator-copy">
-          <p class="home-eyebrow">Próximamente</p>
-          <h2 id="evaluator-title">¿Qué tan preparada está tu empresa digitalmente?</h2>
-          <p>Estamos preparando un diagnóstico breve para ayudarte a identificar fortalezas, oportunidades y tus próximas prioridades digitales.</p>
-          <p class="resources-evaluator-status" aria-disabled="true">Evaluador digital · Próximamente</p>
+    <section class="resources-evaluator" aria-label="Evaluador digital">
+      <div class="home-container">
+        <div class="resources-evaluator-app" id="digital-evaluator">
+          <div class="evaluator-screen" data-evaluator-screen="intro">
+            <p class="home-eyebrow">Evaluador digital</p>
+            <h2 id="evaluator-title" tabindex="-1">¿Qué tan preparada está tu empresa digitalmente?</h2>
+            <p class="evaluator-intro-copy">Respondé 18 preguntas breves para identificar fortalezas, oportunidades y tus próximas prioridades digitales.</p>
+            <p class="evaluator-meta">18 preguntas · 6 áreas · resultado inmediato</p>
+            <p class="evaluator-privacy">Sin registro. Tus respuestas no se envían a KyTech y el resultado se calcula únicamente en tu navegador.</p>
+            <button class="home-button home-button-primary evaluator-start" type="button" data-evaluator-start>Comenzar diagnóstico <span aria-hidden="true">→</span></button>
+          </div>
+
+          <div class="evaluator-screen" data-evaluator-screen="question" hidden>
+            <p class="home-eyebrow" data-question-area></p>
+            <p class="evaluator-question-count" data-question-count></p>
+            <progress class="evaluator-progress" data-question-progress max="18" value="0" aria-label="Progreso del diagnóstico"></progress>
+            <form data-question-form novalidate>
+              <div data-question-content></div>
+              <p class="evaluator-error" id="evaluator-validation-message" data-question-error role="alert" hidden>Elegí una respuesta para poder continuar.</p>
+              <div class="evaluator-navigation">
+                <button class="home-button evaluator-button-secondary" type="button" data-previous hidden>Anterior</button>
+                <button class="home-button home-button-primary" type="submit" data-next>Siguiente <span aria-hidden="true">→</span></button>
+              </div>
+            </form>
+          </div>
+
+          <div class="evaluator-screen evaluator-results" data-evaluator-screen="results" role="region" aria-label="Resultado del evaluador" aria-live="polite" hidden></div>
         </div>
-        <ul class="resources-areas" aria-label="Áreas que incluirá el evaluador digital">
-          <li>Presencia digital</li>
-          <li>Microsoft 365</li>
-          <li>Organización y colaboración</li>
-          <li>Automatización</li>
-          <li>Inteligencia artificial</li>
-          <li>Soporte y continuidad</li>
-        </ul>
       </div>
     </section>
 
