@@ -33,6 +33,28 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="style.css?v=14" />
+
+  <style>
+    .acomp-situation-flip-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 18px; }
+    .acomp-situation-flip { min-width: 0; min-height: 290px; perspective: 1100px; }
+    .acomp-situation-flip-inner { position: relative; min-height: 290px; transform-style: preserve-3d; transition: transform 300ms cubic-bezier(.2,.7,.2,1); }
+    .acomp-situation-flip.is-flipped .acomp-situation-flip-inner { transform: rotateY(180deg); }
+    .acomp-situation-face { position: absolute; inset: 0; display: flex; flex-direction: column; padding: 22px; border: 1px solid var(--acomp-border); border-radius: 12px; background: #fff; backface-visibility: hidden; -webkit-backface-visibility: hidden; }
+    .acomp-situation-front .acomp-index { margin-bottom: 18px; }
+    .acomp-situation-face h3 { margin: 0; }
+    .acomp-situation-trigger, .acomp-situation-actions button { margin-top: auto; padding: 14px 0 0; border: 0; background: transparent; color: var(--acomp-blue); font: inherit; font-size: .88rem; font-weight: 700; cursor: pointer; align-self: flex-start; }
+    .acomp-situation-trigger:hover, .acomp-situation-actions button:hover { text-decoration: underline; text-underline-offset: 4px; }
+    .acomp-situation-trigger:focus-visible, .acomp-situation-actions button:focus-visible, .acomp-situation-actions a:focus-visible { outline: 3px solid rgba(50,102,255,.28); outline-offset: 4px; border-radius: 3px; }
+    .acomp-situation-back { transform: rotateY(180deg); }
+    .acomp-situation-back .acomp-eyebrow { margin: 0 0 7px; }
+    .acomp-situation-back ul { margin: 14px 0 16px; padding-left: 19px; color: var(--acomp-muted); font-size: .85rem; line-height: 1.55; }
+    .acomp-situation-actions { display: flex; align-items: center; justify-content: space-between; gap: 14px; margin-top: auto; }
+    .acomp-situation-actions a { color: var(--acomp-blue); font-size: .84rem; font-weight: 700; text-decoration: none; }
+    .acomp-situation-actions button { margin: 0; padding: 0; white-space: nowrap; }
+    @media (max-width: 980px) { .acomp-situation-flip-grid { grid-template-columns: 1fr; gap: 14px; } .acomp-situation-flip, .acomp-situation-flip-inner { min-height: 250px; } }
+    @media (max-width: 540px) { .acomp-situation-face { padding: 20px; } .acomp-situation-flip, .acomp-situation-flip-inner { min-height: 290px; } .acomp-situation-actions { align-items: flex-start; flex-direction: column; } }
+    @media (prefers-reduced-motion: reduce) { .acomp-situation-flip-inner { transition: none; transform-style: flat; } .acomp-situation-flip.is-flipped .acomp-situation-flip-inner { transform: none; } .acomp-situation-face { backface-visibility: visible; } .acomp-situation-back { display: none; transform: none; } .acomp-situation-flip.is-flipped .acomp-situation-front { display: none; } .acomp-situation-flip.is-flipped .acomp-situation-back { display: flex; } }
+  </style>
 </head>
 <body class="acomp-page">
   <a class="acomp-skip" href="#contenido">Saltar al contenido</a>
@@ -86,21 +108,60 @@
           <h2 id="situations-title">No tienes que empezar sabiendo qué necesitas</h2>
           <p>Tú conoces tu negocio. Nosotros te ayudamos con el camino digital.</p>
         </div>
-        <div class="acomp-situation-list">
-          <article class="acomp-situation">
-            <span class="acomp-index">01</span>
-            <h3>Tengo una idea y quiero empezar bien</h3>
-            <span class="acomp-situation-mark" aria-hidden="true">↗</span>
+        <div class="acomp-situation-list acomp-situation-flip-grid">
+          <article class="acomp-situation-flip" data-acomp-flip>
+            <div class="acomp-situation-flip-inner">
+              <section class="acomp-situation-face acomp-situation-front" aria-labelledby="situation-1-front">
+                <span class="acomp-index">01</span>
+                <h3 id="situation-1-front">Tengo una idea y quiero empezar bien</h3>
+                <button class="acomp-situation-trigger" type="button" data-flip-open aria-expanded="false">Explorar <span aria-hidden="true">→</span></button>
+              </section>
+              <section class="acomp-situation-face acomp-situation-back" aria-labelledby="situation-1-back" aria-hidden="true" inert>
+                <p class="acomp-eyebrow">Podemos empezar por</p>
+                <h3 id="situation-1-back">Darle forma al primer paso</h3>
+                <ul><li>Entender la idea y el objetivo</li><li>Definir prioridades</li><li>Crear una presencia digital inicial</li><li>Elegir herramientas básicas</li><li>Ordenar próximos pasos</li></ul>
+                <div class="acomp-situation-actions">
+                  <a href="contacto.html?interes=acompanamiento">Hablemos de tu proyecto <span aria-hidden="true">→</span></a>
+                  <button type="button" data-flip-close>← Volver</button>
+                </div>
+              </section>
+            </div>
           </article>
-          <article class="acomp-situation">
-            <span class="acomp-index">02</span>
-            <h3>Mi empresa está creciendo y necesito ordenar la tecnología</h3>
-            <span class="acomp-situation-mark" aria-hidden="true">↗</span>
+          <article class="acomp-situation-flip" data-acomp-flip>
+            <div class="acomp-situation-flip-inner">
+              <section class="acomp-situation-face acomp-situation-front" aria-labelledby="situation-2-front">
+                <span class="acomp-index">02</span>
+                <h3 id="situation-2-front">Mi empresa está creciendo y necesito ordenar la tecnología</h3>
+                <button class="acomp-situation-trigger" type="button" data-flip-open aria-expanded="false">Explorar <span aria-hidden="true">→</span></button>
+              </section>
+              <section class="acomp-situation-face acomp-situation-back" aria-labelledby="situation-2-back" aria-hidden="true" inert>
+                <p class="acomp-eyebrow">Podemos empezar por</p>
+                <h3 id="situation-2-back">Ordenar antes de sumar</h3>
+                <ul><li>Revisar herramientas actuales</li><li>Organizar usuarios y accesos</li><li>Centralizar información</li><li>Definir formas de trabajo</li><li>Priorizar mejoras</li></ul>
+                <div class="acomp-situation-actions">
+                  <a href="contacto.html?interes=microsoft365">Hablemos de tu proyecto <span aria-hidden="true">→</span></a>
+                  <button type="button" data-flip-close>← Volver</button>
+                </div>
+              </section>
+            </div>
           </article>
-          <article class="acomp-situation">
-            <span class="acomp-index">03</span>
-            <h3>Ya tengo herramientas, pero están desconectadas y hacemos demasiado trabajo manual</h3>
-            <span class="acomp-situation-mark" aria-hidden="true">↗</span>
+          <article class="acomp-situation-flip" data-acomp-flip>
+            <div class="acomp-situation-flip-inner">
+              <section class="acomp-situation-face acomp-situation-front" aria-labelledby="situation-3-front">
+                <span class="acomp-index">03</span>
+                <h3 id="situation-3-front">Ya tengo herramientas, pero están desconectadas y hacemos demasiado trabajo manual</h3>
+                <button class="acomp-situation-trigger" type="button" data-flip-open aria-expanded="false">Explorar <span aria-hidden="true">→</span></button>
+              </section>
+              <section class="acomp-situation-face acomp-situation-back" aria-labelledby="situation-3-back" aria-hidden="true" inert>
+                <p class="acomp-eyebrow">Podemos empezar por</p>
+                <h3 id="situation-3-back">Conectar y simplificar</h3>
+                <ul><li>Detectar tareas repetitivas</li><li>Revisar procesos manuales</li><li>Conectar herramientas existentes</li><li>Evaluar automatizaciones</li><li>Identificar casos de uso de IA</li></ul>
+                <div class="acomp-situation-actions">
+                  <a href="contacto.html?interes=automatizacion">Hablemos de tu proyecto <span aria-hidden="true">→</span></a>
+                  <button type="button" data-flip-close>← Volver</button>
+                </div>
+              </section>
+            </div>
           </article>
         </div>
       </div>
@@ -273,6 +334,29 @@
         if (!whatsappLink) return;
 
         gtag('event', 'contact_whatsapp');
+      });
+    })();
+  </script>
+
+  <script>
+    (() => {
+      document.querySelectorAll('[data-acomp-flip]').forEach((card) => {
+        const openButton = card.querySelector('[data-flip-open]');
+        const closeButton = card.querySelector('[data-flip-close]');
+        const front = card.querySelector('.acomp-situation-front');
+        const back = card.querySelector('.acomp-situation-back');
+        if (!openButton || !closeButton || !front || !back) return;
+        function setFlipped(flipped) {
+          card.classList.toggle('is-flipped', flipped);
+          openButton.setAttribute('aria-expanded', String(flipped));
+          front.setAttribute('aria-hidden', String(flipped));
+          back.setAttribute('aria-hidden', String(!flipped));
+          if (flipped) { front.setAttribute('inert',''); back.removeAttribute('inert'); closeButton.focus(); }
+          else { back.setAttribute('inert',''); front.removeAttribute('inert'); openButton.focus(); }
+        }
+        openButton.addEventListener('click', () => setFlipped(true));
+        closeButton.addEventListener('click', () => setFlipped(false));
+        card.addEventListener('keydown', (event) => { if (event.key === 'Escape' && card.classList.contains('is-flipped')) setFlipped(false); });
       });
     })();
   </script>

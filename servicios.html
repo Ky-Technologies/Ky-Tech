@@ -110,6 +110,31 @@
     ]
   }
   </script>
+
+  <style>
+    .servi-create-grid, .servi-work-grid { align-items: stretch; gap: 18px 24px; }
+    .servi-flip-card { display: block; min-width: 0; min-height: 250px; padding: 0; border: 0; background: transparent; perspective: 1200px; }
+    .servi-flip-card-inner { position: relative; width: 100%; min-height: 250px; transform-style: preserve-3d; transition: transform 320ms cubic-bezier(.2,.7,.2,1); }
+    .servi-flip-card.is-flipped .servi-flip-card-inner { transform: rotateY(180deg); }
+    .servi-flip-card-face { position: absolute; inset: 0; display: flex; border: 1px solid var(--servi-border); border-radius: 12px; background: #fff; backface-visibility: hidden; -webkit-backface-visibility: hidden; overflow: hidden; }
+    .servi-flip-card-front { align-items: flex-start; gap: 18px; padding: 22px 24px; }
+    .servi-flip-card-front .servi-service-index { flex: 0 0 auto; }
+    .servi-flip-card-copy { min-width: 0; display: flex; flex: 1; min-height: 204px; flex-direction: column; align-items: flex-start; }
+    .servi-flip-kicker { margin: 0 0 6px; color: var(--servi-blue) !important; font-size: .76rem; font-weight: 700; letter-spacing: .1em; text-transform: uppercase; }
+    .servi-flip-card-copy h3, .servi-flip-card-back h3 { margin: 0; }
+    .servi-flip-card-copy > p:not(.servi-flip-kicker) { max-width: 470px; margin: 10px 0 0; color: var(--servi-muted) !important; }
+    .servi-flip-trigger, .servi-flip-back { margin-top: auto; padding: 0; border: 0; background: transparent; color: var(--servi-blue); font: inherit; font-size: .89rem; font-weight: 700; cursor: pointer; }
+    .servi-flip-trigger { padding-top: 14px; }
+    .servi-flip-trigger:hover, .servi-flip-back:hover { text-decoration: underline; text-underline-offset: 4px; }
+    .servi-flip-trigger:focus-visible, .servi-flip-back:focus-visible { outline: 3px solid rgba(50,102,255,.28); outline-offset: 5px; border-radius: 3px; }
+    .servi-flip-card-back { flex-direction: column; padding: 20px 24px; transform: rotateY(180deg); }
+    .servi-flip-card-back .servi-inline-list { margin: 12px 0; }
+    .servi-flip-card-actions { display: flex; align-items: center; justify-content: space-between; gap: 18px; margin-top: auto; }
+    .servi-flip-card-actions .servi-text-link { margin: 0; }
+    .servi-grow-layout .servi-flip-card { width: 100%; }
+    @media (max-width:767px) { .servi-create-grid,.servi-work-grid{gap:16px}.servi-flip-card,.servi-flip-card-inner{min-height:305px}.servi-flip-card-front,.servi-flip-card-back{padding:20px}.servi-flip-card-copy{min-height:263px}.servi-flip-card-actions{align-items:flex-start;flex-direction:column;gap:12px} }
+    @media (prefers-reduced-motion:reduce) { .servi-flip-card-inner{transition:none;transform-style:flat}.servi-flip-card.is-flipped .servi-flip-card-inner{transform:none}.servi-flip-card-face{backface-visibility:visible}.servi-flip-card-back{display:none;transform:none}.servi-flip-card.is-flipped .servi-flip-card-front{display:none}.servi-flip-card.is-flipped .servi-flip-card-back{display:flex} }
+  </style>
 </head>
 <body class="servi-page">
   <a class="servi-skip" href="#contenido">Saltar al contenido</a>
@@ -180,37 +205,31 @@
           <p>Tu presencia digital debe explicar claramente quién eres, qué haces y por qué alguien debería elegirte.</p>
         </header>
         <div class="servi-create-grid">
-          <article class="servi-service servi-service-featured">
-            <div class="servi-service-heading">
-              <span class="servi-service-index">01</span>
-              <h3>Web corporativa</h3>
+                    <article class="servi-flip-card" data-flip-card>
+            <div class="servi-flip-card-inner">
+              <section class="servi-flip-card-face servi-flip-card-front" aria-labelledby="web-front-title">
+                <span class="servi-service-index">01</span>
+                <div class="servi-flip-card-copy"><p class="servi-flip-kicker">Creamos</p><h3 id="web-front-title">Web corporativa</h3><p>Una presencia web profesional, clara y preparada para crecer.</p><button class="servi-flip-trigger" type="button" data-flip-open aria-expanded="false">Explorar <span aria-hidden="true">→</span></button></div>
+              </section>
+              <section class="servi-flip-card-face servi-flip-card-back" aria-labelledby="web-back-title" aria-hidden="true" inert>
+                <div class="servi-flip-card-back-top"><p class="servi-flip-kicker">Web corporativa</p><h3 id="web-back-title">Puede incluir</h3></div>
+                <ul class="servi-inline-list"><li>Diseño y desarrollo web</li><li>Dominio y publicación</li><li>Adaptación a dispositivos móviles</li><li>Formularios y canales de contacto</li><li>Mantenimiento y evolución del sitio</li></ul>
+                <div class="servi-flip-card-actions"><a class="servi-text-link" href="contacto.html?interes=web">Consultar sobre Web corporativa <span aria-hidden="true">→</span></a><button class="servi-flip-back" type="button" data-flip-close>← Volver</button></div>
+              </section>
             </div>
-            <p>Diseñamos y desarrollamos una presencia web profesional alineada con tu negocio, preparada para verse correctamente en computadora, tablet y móvil.</p>
-            <h4>Puede incluir</h4>
-            <ul class="servi-list">
-              <li>Diseño y desarrollo web.</li>
-              <li>Dominio y publicación.</li>
-              <li>Adaptación a dispositivos móviles.</li>
-              <li>Formularios y canales de contacto.</li>
-              <li>Mantenimiento y evolución del sitio.</li>
-            </ul>
-            <a class="servi-text-link" href="contacto.html?interes=web">Consultar sobre Web corporativa <span aria-hidden="true">→</span></a>
           </article>
-          <article class="servi-service servi-service-secondary">
-            <div class="servi-service-heading">
-              <span class="servi-service-index">02</span>
-              <h3>SEO</h3>
+                    <article class="servi-flip-card" data-flip-card>
+            <div class="servi-flip-card-inner">
+              <section class="servi-flip-card-face servi-flip-card-front" aria-labelledby="seo-front-title">
+                <span class="servi-service-index">02</span>
+                <div class="servi-flip-card-copy"><p class="servi-flip-kicker">Creamos</p><h3 id="seo-front-title">SEO</h3><p>Una base clara para que buscadores y potenciales clientes entiendan mejor tu sitio.</p><button class="servi-flip-trigger" type="button" data-flip-open aria-expanded="false">Explorar <span aria-hidden="true">→</span></button></div>
+              </section>
+              <section class="servi-flip-card-face servi-flip-card-back" aria-labelledby="seo-back-title" aria-hidden="true" inert>
+                <div class="servi-flip-card-back-top"><p class="servi-flip-kicker">SEO</p><h3 id="seo-back-title">Puede incluir</h3></div>
+                <ul class="servi-inline-list"><li>Estructura del sitio</li><li>Títulos y descripciones</li><li>Contenido</li><li>Optimización técnica básica</li><li>Rendimiento y preparación para buscadores</li></ul>
+                <div class="servi-flip-card-actions"><a class="servi-text-link" href="contacto.html?interes=seo">Consultar sobre SEO <span aria-hidden="true">→</span></a><button class="servi-flip-back" type="button" data-flip-close>← Volver</button></div>
+              </section>
             </div>
-            <p>Preparamos la estructura y el contenido de tu sitio para que los buscadores puedan entenderlo mejor y tus potenciales clientes puedan encontrarte.</p>
-            <h4>Puede incluir</h4>
-            <ul class="servi-list">
-              <li>Estructura del sitio.</li>
-              <li>Títulos y descripciones.</li>
-              <li>Contenido.</li>
-              <li>Optimización técnica básica.</li>
-              <li>Rendimiento y preparación para buscadores.</li>
-            </ul>
-            <a class="servi-text-link" href="contacto.html?interes=seo">Consultar sobre SEO <span aria-hidden="true">→</span></a>
           </article>
         </div>
       </div>
@@ -225,52 +244,56 @@
         </header>
 
         <div class="servi-work-grid">
-          <article class="servi-work-item">
-            <span class="servi-service-index">03</span>
-            <div>
-              <h3>Microsoft 365</h3>
-              <p>Configuramos un entorno de trabajo profesional utilizando las herramientas de Microsoft 365 que realmente necesita tu empresa.</p>
-              <h4>Áreas</h4>
-              <ul class="servi-inline-list">
-                <li>Outlook</li><li>Teams</li><li>OneDrive</li><li>SharePoint</li><li>Gestión de usuarios</li><li>Organización de información</li>
-              </ul>
-              <a class="servi-text-link" href="contacto.html?interes=microsoft365">Consultar sobre Microsoft 365 <span aria-hidden="true">→</span></a>
+                    <article class="servi-flip-card" data-flip-card>
+            <div class="servi-flip-card-inner">
+              <section class="servi-flip-card-face servi-flip-card-front" aria-labelledby="microsoft365-front-title">
+                <span class="servi-service-index">03</span>
+                <div class="servi-flip-card-copy"><p class="servi-flip-kicker">Construimos</p><h3 id="microsoft365-front-title">Microsoft 365</h3><p>Un entorno de trabajo profesional con las herramientas que realmente necesita tu empresa.</p><button class="servi-flip-trigger" type="button" data-flip-open aria-expanded="false">Explorar <span aria-hidden="true">→</span></button></div>
+              </section>
+              <section class="servi-flip-card-face servi-flip-card-back" aria-labelledby="microsoft365-back-title" aria-hidden="true" inert>
+                <div class="servi-flip-card-back-top"><p class="servi-flip-kicker">Microsoft 365</p><h3 id="microsoft365-back-title">Puede incluir</h3></div>
+                <ul class="servi-inline-list"><li>Outlook</li><li>Teams</li><li>OneDrive</li><li>SharePoint</li><li>Gestión de usuarios</li><li>Organización de información</li></ul>
+                <div class="servi-flip-card-actions"><a class="servi-text-link" href="contacto.html?interes=microsoft365">Consultar sobre Microsoft 365 <span aria-hidden="true">→</span></a><button class="servi-flip-back" type="button" data-flip-close>← Volver</button></div>
+              </section>
             </div>
           </article>
-          <article class="servi-work-item">
-            <span class="servi-service-index">04</span>
-            <div>
-              <h3>Trabajo colaborativo</h3>
-              <p>Diseñamos cómo compartir información, comunicarse y trabajar en equipo sin depender de archivos dispersos o procesos improvisados.</p>
-              <h4>Áreas</h4>
-              <ul class="servi-inline-list">
-                <li>Espacios compartidos</li><li>Organización documental</li><li>Teams</li><li>SharePoint</li><li>OneDrive</li><li>Permisos y accesos</li>
-              </ul>
-              <a class="servi-text-link" href="contacto.html?interes=colaboracion">Consultar sobre colaboración <span aria-hidden="true">→</span></a>
+                    <article class="servi-flip-card" data-flip-card>
+            <div class="servi-flip-card-inner">
+              <section class="servi-flip-card-face servi-flip-card-front" aria-labelledby="colaboracion-front-title">
+                <span class="servi-service-index">04</span>
+                <div class="servi-flip-card-copy"><p class="servi-flip-kicker">Construimos</p><h3 id="colaboracion-front-title">Trabajo colaborativo</h3><p>Información, comunicación y trabajo en equipo en espacios más ordenados y conectados.</p><button class="servi-flip-trigger" type="button" data-flip-open aria-expanded="false">Explorar <span aria-hidden="true">→</span></button></div>
+              </section>
+              <section class="servi-flip-card-face servi-flip-card-back" aria-labelledby="colaboracion-back-title" aria-hidden="true" inert>
+                <div class="servi-flip-card-back-top"><p class="servi-flip-kicker">Trabajo colaborativo</p><h3 id="colaboracion-back-title">Puede incluir</h3></div>
+                <ul class="servi-inline-list"><li>Espacios compartidos</li><li>Organización documental</li><li>Teams</li><li>SharePoint</li><li>OneDrive</li><li>Permisos y accesos</li></ul>
+                <div class="servi-flip-card-actions"><a class="servi-text-link" href="contacto.html?interes=colaboracion">Consultar sobre colaboración <span aria-hidden="true">→</span></a><button class="servi-flip-back" type="button" data-flip-close>← Volver</button></div>
+              </section>
             </div>
           </article>
-          <article class="servi-work-item servi-work-item-automation">
-            <span class="servi-service-index">05</span>
-            <div>
-              <h3>Automatización</h3>
-              <p>Identificamos tareas repetitivas que pueden simplificarse para reducir trabajo manual.</p>
-              <h4>Ejemplos</h4>
-              <ul class="servi-inline-list">
-                <li>Formularios</li><li>Notificaciones</li><li>Procesos de aprobación</li><li>Actualización de información</li><li>Flujos con Power Automate</li><li>Integraciones sencillas entre herramientas</li>
-              </ul>
-              <a class="servi-text-link" href="contacto.html?interes=automatizacion">Consultar sobre automatización <span aria-hidden="true">→</span></a>
+                    <article class="servi-flip-card" data-flip-card>
+            <div class="servi-flip-card-inner">
+              <section class="servi-flip-card-face servi-flip-card-front" aria-labelledby="automatizacion-front-title">
+                <span class="servi-service-index">05</span>
+                <div class="servi-flip-card-copy"><p class="servi-flip-kicker">Simplificamos</p><h3 id="automatizacion-front-title">Automatización</h3><p>Menos tareas repetitivas. Más tiempo para el trabajo que aporta valor.</p><button class="servi-flip-trigger" type="button" data-flip-open aria-expanded="false">Explorar <span aria-hidden="true">→</span></button></div>
+              </section>
+              <section class="servi-flip-card-face servi-flip-card-back" aria-labelledby="automatizacion-back-title" aria-hidden="true" inert>
+                <div class="servi-flip-card-back-top"><p class="servi-flip-kicker">Automatización</p><h3 id="automatizacion-back-title">Puede incluir</h3></div>
+                <ul class="servi-inline-list"><li>Formularios</li><li>Notificaciones</li><li>Procesos de aprobación</li><li>Actualización de información</li><li>Flujos con Power Automate</li><li>Integraciones sencillas entre herramientas</li></ul>
+                <div class="servi-flip-card-actions"><a class="servi-text-link" href="contacto.html?interes=automatizacion">Consultar sobre automatización <span aria-hidden="true">→</span></a><button class="servi-flip-back" type="button" data-flip-close>← Volver</button></div>
+              </section>
             </div>
           </article>
-          <article class="servi-work-item servi-work-item-ai">
-            <span class="servi-service-index">06</span>
-            <div>
-              <h3>IA aplicada al negocio</h3>
-              <p>Buscamos situaciones concretas donde la inteligencia artificial pueda aportar valor al trabajo diario.</p>
-              <h4>Ejemplos</h4>
-              <ul class="servi-inline-list">
-                <li>Microsoft Copilot</li><li>Creación y organización de contenido</li><li>Asistencia con documentos</li><li>Análisis de información</li><li>Automatización asistida por IA</li><li>Identificación de casos de uso</li>
-              </ul>
-              <a class="servi-text-link" href="contacto.html?interes=ia">Consultar sobre inteligencia artificial <span aria-hidden="true">→</span></a>
+                    <article class="servi-flip-card" data-flip-card>
+            <div class="servi-flip-card-inner">
+              <section class="servi-flip-card-face servi-flip-card-front" aria-labelledby="ia-front-title">
+                <span class="servi-service-index">06</span>
+                <div class="servi-flip-card-copy"><p class="servi-flip-kicker">Simplificamos</p><h3 id="ia-front-title">IA aplicada al negocio</h3><p>Casos concretos donde la inteligencia artificial puede aportar valor al trabajo diario.</p><button class="servi-flip-trigger" type="button" data-flip-open aria-expanded="false">Explorar <span aria-hidden="true">→</span></button></div>
+              </section>
+              <section class="servi-flip-card-face servi-flip-card-back" aria-labelledby="ia-back-title" aria-hidden="true" inert>
+                <div class="servi-flip-card-back-top"><p class="servi-flip-kicker">IA aplicada al negocio</p><h3 id="ia-back-title">Puede incluir</h3></div>
+                <ul class="servi-inline-list"><li>Microsoft Copilot</li><li>Creación y organización de contenido</li><li>Asistencia con documentos</li><li>Análisis de información</li><li>Automatización asistida por IA</li><li>Identificación de casos de uso</li></ul>
+                <div class="servi-flip-card-actions"><a class="servi-text-link" href="contacto.html?interes=ia">Consultar sobre inteligencia artificial <span aria-hidden="true">→</span></a><button class="servi-flip-back" type="button" data-flip-close>← Volver</button></div>
+              </section>
             </div>
           </article>
         </div>
@@ -285,20 +308,18 @@
           <h2 id="servi-grow-title">La implementación es solo el comienzo.</h2>
           <p>Tu empresa cambia, incorpora personas, agrega herramientas y encuentra nuevos desafíos. KyTech puede seguir acompañándote después de implementar una solución.</p>
         </header>
-        <article class="servi-support">
-          <div class="servi-support-top"><span class="servi-service-index">07</span><span class="servi-support-label">Acompañamiento continuo</span></div>
-          <h3>Soporte tecnológico continuo</h3>
-          <p>Un punto de contacto para ayudarte a resolver problemas, mantener herramientas funcionando y acompañar nuevas necesidades.</p>
-          <h4>Puede incluir</h4>
-          <ul class="servi-list servi-support-list">
-            <li>Soporte remoto.</li>
-            <li>Resolución de incidentes.</li>
-            <li>Ayuda con herramientas Microsoft 365.</li>
-            <li>Incorporación de nuevos usuarios.</li>
-            <li>Ajustes y mejoras.</li>
-            <li>Acompañamiento ante nuevas necesidades.</li>
-          </ul>
-          <a class="servi-text-link" href="contacto.html?interes=soporte">Consultar sobre soporte <span aria-hidden="true">→</span></a>
+                <article class="servi-flip-card" data-flip-card>
+          <div class="servi-flip-card-inner">
+            <section class="servi-flip-card-face servi-flip-card-front" aria-labelledby="soporte-front-title">
+              <span class="servi-service-index">07</span>
+              <div class="servi-flip-card-copy"><p class="servi-flip-kicker">Crecemos</p><h3 id="soporte-front-title">Soporte tecnológico continuo</h3><p>Un punto de contacto para resolver problemas, sostener herramientas y acompañar nuevas necesidades.</p><button class="servi-flip-trigger" type="button" data-flip-open aria-expanded="false">Explorar <span aria-hidden="true">→</span></button></div>
+            </section>
+            <section class="servi-flip-card-face servi-flip-card-back" aria-labelledby="soporte-back-title" aria-hidden="true" inert>
+              <div class="servi-flip-card-back-top"><p class="servi-flip-kicker">Soporte tecnológico continuo</p><h3 id="soporte-back-title">Puede incluir</h3></div>
+              <ul class="servi-inline-list"><li>Soporte remoto</li><li>Resolución de incidentes</li><li>Ayuda con herramientas Microsoft 365</li><li>Incorporación de nuevos usuarios</li><li>Ajustes y mejoras</li><li>Acompañamiento ante nuevas necesidades</li></ul>
+              <div class="servi-flip-card-actions"><a class="servi-text-link" href="contacto.html?interes=soporte">Consultar sobre soporte <span aria-hidden="true">→</span></a><button class="servi-flip-back" type="button" data-flip-close>← Volver</button></div>
+            </section>
+          </div>
         </article>
       </div>
     </section>
@@ -467,6 +488,31 @@
         if (!whatsappLink) return;
 
         gtag('event', 'contact_whatsapp');
+      });
+    })();
+  </script>
+
+  <script>
+    (() => {
+      const flipCards = [...document.querySelectorAll('[data-flip-card]')];
+      if (!flipCards.length) return;
+      flipCards.forEach((flipCard) => {
+        const openButton = flipCard.querySelector('[data-flip-open]');
+        const closeButton = flipCard.querySelector('[data-flip-close]');
+        const frontFace = flipCard.querySelector('.servi-flip-card-front');
+        const backFace = flipCard.querySelector('.servi-flip-card-back');
+        if (!openButton || !closeButton || !frontFace || !backFace) return;
+        function setFlipped(flipped) {
+          flipCard.classList.toggle('is-flipped', flipped);
+          openButton.setAttribute('aria-expanded', String(flipped));
+          frontFace.setAttribute('aria-hidden', String(flipped));
+          backFace.setAttribute('aria-hidden', String(!flipped));
+          if (flipped) { frontFace.setAttribute('inert',''); backFace.removeAttribute('inert'); closeButton.focus(); }
+          else { backFace.setAttribute('inert',''); frontFace.removeAttribute('inert'); openButton.focus(); }
+        }
+        openButton.addEventListener('click', () => setFlipped(true));
+        closeButton.addEventListener('click', () => setFlipped(false));
+        flipCard.addEventListener('keydown', (event) => { if (event.key === 'Escape' && flipCard.classList.contains('is-flipped')) setFlipped(false); });
       });
     })();
   </script>

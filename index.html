@@ -45,6 +45,24 @@
     "email": "info@kytech.com.ar"
   }
   </script>
+
+  <style>
+    .home-why-flip-grid { gap: 18px; }
+    .home-why-flip { min-width: 0; min-height: 230px; perspective: 1100px; }
+    .home-why-flip-inner { position: relative; min-height: 230px; transform-style: preserve-3d; transition: transform 300ms cubic-bezier(.2,.7,.2,1); }
+    .home-why-flip.is-flipped .home-why-flip-inner { transform: rotateY(180deg); }
+    .home-why-flip-face { position: absolute; inset: 0; display: flex; flex-direction: column; padding: 22px; border: 1px solid var(--home-border); border-radius: 12px; background: #fff; backface-visibility: hidden; -webkit-backface-visibility: hidden; }
+    .home-why-flip-front .home-step-number { margin-bottom: 14px; }
+    .home-why-flip-face h3 { margin: 0; }
+    .home-why-flip-face > p:not(.home-eyebrow) { margin: 10px 0 0; color: var(--home-muted) !important; font-size: .93rem; line-height: 1.55; }
+    .home-why-flip-back { transform: rotateY(180deg); }
+    .home-why-flip-back .home-eyebrow { margin: 0 0 8px; }
+    .home-why-flip-trigger, .home-why-flip-back-button { margin-top: auto; padding: 14px 0 0; border: 0; background: transparent; color: var(--home-blue); font: inherit; font-size: .88rem; font-weight: 700; cursor: pointer; align-self: flex-start; }
+    .home-why-flip-trigger:hover, .home-why-flip-back-button:hover { text-decoration: underline; text-underline-offset: 4px; }
+    .home-why-flip-trigger:focus-visible, .home-why-flip-back-button:focus-visible { outline: 3px solid rgba(50,102,255,.28); outline-offset: 4px; border-radius: 3px; }
+    @media (max-width: 767px) { .home-why-flip-grid { gap: 14px; } .home-why-flip, .home-why-flip-inner { min-height: 245px; } .home-why-flip-face { padding: 20px; } }
+    @media (prefers-reduced-motion: reduce) { .home-why-flip-inner { transition: none; transform-style: flat; } .home-why-flip.is-flipped .home-why-flip-inner { transform: none; } .home-why-flip-face { backface-visibility: visible; } .home-why-flip-back { display: none; transform: none; } .home-why-flip.is-flipped .home-why-flip-front { display: none; } .home-why-flip.is-flipped .home-why-flip-back { display: flex; } }
+  </style>
 </head>
 <body class="home-page">
   <a class="home-skip-link" href="#contenido">Saltar al contenido</a>
@@ -281,21 +299,54 @@
           <h2 id="why-title">Tecnología sin complicarte</h2>
           <p>Trabajamos desde lo que tu negocio necesita, no desde una herramienta específica.</p>
         </div>
-        <div class="home-why-grid">
-          <article class="home-why-item">
-            <span class="home-step-number">01</span>
-            <h3>Empezamos por tu necesidad</h3>
-            <p>Primero entendemos qué querés resolver. Después definimos qué tecnología tiene sentido.</p>
+        <div class="home-why-grid home-why-flip-grid">
+          <article class="home-why-flip" data-home-flip>
+            <div class="home-why-flip-inner">
+              <section class="home-why-flip-face home-why-flip-front" aria-labelledby="why-flip-1-front">
+                <span class="home-step-number">01</span>
+                <h3 id="why-flip-1-front">Empezamos por tu necesidad</h3>
+                <p>Primero entendemos qué querés resolver.</p>
+                <button type="button" class="home-why-flip-trigger" data-flip-open aria-expanded="false">Explorar <span aria-hidden="true">→</span></button>
+              </section>
+              <section class="home-why-flip-face home-why-flip-back" aria-labelledby="why-flip-1-back" aria-hidden="true" inert>
+                <p class="home-eyebrow">Empezamos por tu necesidad</p>
+                <h3 id="why-flip-1-back">Primero el problema</h3>
+                <p>Entendemos el problema, el contexto y qué querés conseguir. Después definimos qué tecnología realmente tiene sentido.</p>
+                <button type="button" class="home-why-flip-back-button" data-flip-close>← Volver</button>
+              </section>
+            </div>
           </article>
-          <article class="home-why-item">
-            <span class="home-step-number">02</span>
-            <h3>Construimos contigo</h3>
-            <p>Te acompañamos desde la primera idea hasta una solución concreta y lista para usar.</p>
+          <article class="home-why-flip" data-home-flip>
+            <div class="home-why-flip-inner">
+              <section class="home-why-flip-face home-why-flip-front" aria-labelledby="why-flip-2-front">
+                <span class="home-step-number">02</span>
+                <h3 id="why-flip-2-front">Construimos contigo</h3>
+                <p>Avanzamos contigo desde la idea hasta una solución concreta.</p>
+                <button type="button" class="home-why-flip-trigger" data-flip-open aria-expanded="false">Explorar <span aria-hidden="true">→</span></button>
+              </section>
+              <section class="home-why-flip-face home-why-flip-back" aria-labelledby="why-flip-2-back" aria-hidden="true" inert>
+                <p class="home-eyebrow">Construimos contigo</p>
+                <h3 id="why-flip-2-back">Decisiones claras</h3>
+                <p>Te acompañamos desde la primera idea, definimos prioridades y construimos una solución concreta y lista para usar.</p>
+                <button type="button" class="home-why-flip-back-button" data-flip-close>← Volver</button>
+              </section>
+            </div>
           </article>
-          <article class="home-why-item">
-            <span class="home-step-number">03</span>
-            <h3>Seguimos después</h3>
-            <p>La solución puede evolucionar junto con tu negocio cuando aparezcan nuevas necesidades.</p>
+          <article class="home-why-flip" data-home-flip>
+            <div class="home-why-flip-inner">
+              <section class="home-why-flip-face home-why-flip-front" aria-labelledby="why-flip-3-front">
+                <span class="home-step-number">03</span>
+                <h3 id="why-flip-3-front">Seguimos después</h3>
+                <p>La solución puede evolucionar junto con tu negocio.</p>
+                <button type="button" class="home-why-flip-trigger" data-flip-open aria-expanded="false">Explorar <span aria-hidden="true">→</span></button>
+              </section>
+              <section class="home-why-flip-face home-why-flip-back" aria-labelledby="why-flip-3-back" aria-hidden="true" inert>
+                <p class="home-eyebrow">Seguimos después</p>
+                <h3 id="why-flip-3-back">Una base que evoluciona</h3>
+                <p>Cuando aparecen nuevas necesidades, podemos acompañar ajustes, mejoras y próximos pasos sin empezar de cero.</p>
+                <button type="button" class="home-why-flip-back-button" data-flip-close>← Volver</button>
+              </section>
+            </div>
           </article>
         </div>
       </div>
@@ -390,6 +441,40 @@
 
       gtag('event', 'contact_whatsapp');
     });
+  </script>
+
+  <script>
+    (() => {
+      document.querySelectorAll('[data-home-flip]').forEach((card) => {
+        const openButton = card.querySelector('[data-flip-open]');
+        const closeButton = card.querySelector('[data-flip-close]');
+        const front = card.querySelector('.home-why-flip-front');
+        const back = card.querySelector('.home-why-flip-back');
+        if (!openButton || !closeButton || !front || !back) return;
+
+        function setFlipped(flipped) {
+          card.classList.toggle('is-flipped', flipped);
+          openButton.setAttribute('aria-expanded', String(flipped));
+          front.setAttribute('aria-hidden', String(flipped));
+          back.setAttribute('aria-hidden', String(!flipped));
+          if (flipped) {
+            front.setAttribute('inert', '');
+            back.removeAttribute('inert');
+            closeButton.focus();
+          } else {
+            back.setAttribute('inert', '');
+            front.removeAttribute('inert');
+            openButton.focus();
+          }
+        }
+
+        openButton.addEventListener('click', () => setFlipped(true));
+        closeButton.addEventListener('click', () => setFlipped(false));
+        card.addEventListener('keydown', (event) => {
+          if (event.key === 'Escape' && card.classList.contains('is-flipped')) setFlipped(false);
+        });
+      });
+    })();
   </script>
   <a class="ky-whatsapp-float" href="https://wa.me/5491136682292?text=Hola%20KyTech%2C%20quiero%20consultar%20por%20un%20proyecto." target="_blank" rel="noopener noreferrer" aria-label="Contactar a KyTech por WhatsApp">
     <svg class="ky-whatsapp-icon" viewBox="0 0 32 32" aria-hidden="true" focusable="false">
