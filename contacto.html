@@ -50,6 +50,14 @@
     .contact-choice-note { margin: 10px 0 0; color: var(--contact-muted); font-size: .8rem; }
     @media (max-width: 700px) { .contact-choice-grid { grid-template-columns: 1fr; } }
     @media (prefers-reduced-motion: reduce) { .contact-choice span { transition-duration: .01ms; } }
+    .contact-estimate-context { margin: 0 0 28px; padding: 18px 20px; border: 1px solid #ddd7ff; border-left: 5px solid #5637ff; border-radius: 11px; background: #f8f6ff; }
+    .contact-estimate-context[hidden] { display: none; }
+    .contact-estimate-context-eyebrow { margin: 0 0 5px; color: #5637ff; font-size: .7rem; font-weight: 800; letter-spacing: .09em; text-transform: uppercase; }
+    .contact-estimate-context h3 { margin: 0 0 8px; color: var(--contact-text); font-size: 1.15rem; }
+    .contact-estimate-context p { margin: 4px 0; color: var(--contact-muted); font-size: .84rem; line-height: 1.5; }
+    .contact-estimate-context strong { color: var(--contact-text); }
+    .contact-estimate-context ul { display: grid; gap: 5px; margin: 12px 0 0; padding-left: 18px; color: var(--contact-text); font-size: .83rem; }
+    @media (max-width: 700px) { .contact-estimate-context { padding: 16px; } }
   </style>
 
 </link></link></link><style>
@@ -94,6 +102,7 @@ a.contact-visual-card:hover { transform: translateY(-3px); border-color: var(--c
 <a href="servicios.html">Servicios</a>
 <a href="como.html">Cómo trabajamos</a>
 <a href="recursos.html">Recursos</a>
+        <a class="contact-nav-builder" href="arma-tu-proyecto.html"><span aria-hidden="true">✦</span> Armá tu proyecto</a>
 <a aria-current="page" href="contacto.html">Contacto</a>
 <a class="contact-nav-cta" href="contacto.html">Construyamos tu proyecto</a>
 </nav>
@@ -107,6 +116,7 @@ a.contact-visual-card:hover { transform: translateY(-3px); border-color: var(--c
 <a href="servicios.html">Servicios</a>
 <a href="como.html">Cómo trabajamos</a>
 <a href="recursos.html">Recursos</a>
+        <a class="contact-nav-builder" href="arma-tu-proyecto.html"><span aria-hidden="true">✦</span> Armá tu proyecto</a>
 <a aria-current="page" href="contacto.html">Contacto</a>
 <a class="contact-nav-cta" href="contacto.html">Construyamos tu proyecto</a>
 </nav>
@@ -125,8 +135,20 @@ a.contact-visual-card:hover { transform: translateY(-3px); border-color: var(--c
 <h2>Empecemos por conocerte.</h2>
 <p>Déjanos algunos datos y cuéntanos brevemente qué necesitas.</p>
 </div>
+<section class="contact-estimate-context" data-contact-estimate hidden aria-labelledby="contact-estimate-title">
+<p class="contact-estimate-context-eyebrow">Tu estimación KyTech</p>
+<h3 id="contact-estimate-title">Continuemos desde lo que ya elegiste.</h3>
+<div data-contact-estimate-summary></div>
+</section>
 <form action="https://api.web3forms.com/submit" class="contact-form" method="POST">
 <input name="access_key" type="hidden" value="dcfa9772-bede-46e3-a6d2-b89102c15e08"/>
+<input name="estimate_reference" type="hidden" value=""/>
+<input name="estimate_services" type="hidden" value=""/>
+<input name="estimate_combos" type="hidden" value=""/>
+<input name="estimate_platform" type="hidden" value=""/>
+<input name="estimate_one_time" type="hidden" value=""/>
+<input name="estimate_monthly" type="hidden" value=""/>
+<input name="estimate_special_status" type="hidden" value=""/>
 <div class="contact-field-grid">
 <div class="contact-field">
 <label for="contact-name">Nombre <span aria-hidden="true">*</span></label>
@@ -171,8 +193,8 @@ a.contact-visual-card:hover { transform: translateY(-3px); border-color: var(--c
 </div>
 </fieldset>
 <div class="contact-field">
-<label for="contact-message">Cuéntanos brevemente qué necesitas <span aria-hidden="true">*</span></label>
-<textarea id="contact-message" name="message" placeholder="Cuéntanos qué estás construyendo, qué necesitas resolver o qué te gustaría mejorar." required=""></textarea>
+<label for="contact-message" data-message-label>Cuéntanos brevemente qué necesitas <span aria-hidden="true" data-message-required>*</span></label>
+<textarea id="contact-message" name="message" data-message-field placeholder="Cuéntanos qué estás construyendo, qué necesitas resolver o qué te gustaría mejorar." required=""></textarea>
 </div>
 <p class="contact-form-error" hidden="" role="alert">No pudimos enviar tu consulta. Inténtalo nuevamente o escríbenos por <a href="https://wa.me/5491136682292?text=Hola%20KyTech%2C%20quiero%20consultar%20por%20un%20proyecto." rel="noopener noreferrer" target="_blank">WhatsApp</a>.</p>
 <button class="contact-submit" type="submit"><span class="contact-submit-label">Enviar consulta</span><span aria-hidden="true">→</span></button>
@@ -348,6 +370,88 @@ a.contact-visual-card:hover { transform: translateY(-3px); border-color: var(--c
       const submitLabel = contactForm.querySelector('.contact-submit-label');
       const formError = contactForm.querySelector('.contact-form-error');
       const formSuccess = document.querySelector('.contact-form-success');
+      const estimateContext = document.querySelector('[data-contact-estimate]');
+      const estimateSummary = document.querySelector('[data-contact-estimate-summary]');
+      const serviceChoiceGroup = document.querySelector('.contact-choice-group');
+      const formatContactMoney = (amount, currency) => amount === null || amount === undefined
+        ? '—'
+        : new Intl.NumberFormat('es-AR', { style: 'currency', currency, maximumFractionDigits: currency === 'USD' ? 2 : 0 }).format(amount);
+
+      function addEstimateHidden(name, value) {
+        const field = contactForm.querySelector(`[name="${name}"]`);
+        if (field) field.value = value || '';
+      }
+
+      function loadEstimateContext() {
+        const params = new URLSearchParams(window.location.search);
+        if (params.get('desde') !== 'estimacion') return;
+        let payload;
+        try {
+          payload = JSON.parse(localStorage.getItem('kytech.project-builder.contact.v1') || 'null');
+        } catch (error) {
+          console.error('No se pudo recuperar la estimación para Contacto.', error);
+          return;
+        }
+        if (!payload || typeof payload.id !== 'string') return;
+
+        const messageField = document.querySelector('[data-message-field]');
+        const messageLabel = document.querySelector('[data-message-label]');
+        const requiredMark = document.querySelector('[data-message-required]');
+        if (messageField) {
+          messageField.required = false;
+          messageField.placeholder = 'Puedes agregar algún detalle, condición o consulta adicional.';
+        }
+        if (messageLabel) {
+          messageLabel.childNodes[0].textContent = '¿Quieres agregar algún comentario? ';
+        }
+        if (requiredMark) requiredMark.hidden = true;
+
+        estimateContext.hidden = false;
+        const reference = document.createElement('p');
+        reference.innerHTML = `<strong>Referencia:</strong> ${payload.id}`;
+        estimateSummary.append(reference);
+        if (payload.platform) {
+          const platform = document.createElement('p');
+          platform.innerHTML = `<strong>Plataforma:</strong> ${payload.platform}`;
+          estimateSummary.append(platform);
+        }
+        const prices = document.createElement('p');
+        const priceParts = [];
+        if (payload.oneTimeArs !== null) priceParts.push(`Pago único: ${formatContactMoney(payload.oneTimeArs, 'ARS')}`);
+        if (payload.monthlyArs !== null) priceParts.push(`Mensual: ${formatContactMoney(payload.monthlyArs, 'ARS')} / mes`);
+        prices.textContent = priceParts.length ? priceParts.join(' · ') : 'Servicios con precio a confirmar.';
+        estimateSummary.append(prices);
+        if (Array.isArray(payload.services) && payload.services.length) {
+          const list = document.createElement('ul');
+          payload.services.forEach((service) => {
+            const item = document.createElement('li');
+            const amount = service.monthly
+              ? `${formatContactMoney(service.ars, 'ARS')} / mes`
+              : service.ars === null ? 'A confirmar' : formatContactMoney(service.ars, 'ARS');
+            item.textContent = `${service.name} · ${amount}`;
+            list.append(item);
+          });
+          estimateSummary.append(list);
+        }
+
+        if (serviceChoiceGroup) {
+          serviceChoiceGroup.hidden = true;
+          serviceChoiceGroup.querySelectorAll('input[name="service"]').forEach((input) => { input.required = false; });
+        }
+
+        const servicesText = (payload.services || []).map((service) => `${service.name}${service.monthly ? ' (mensual)' : ''}`).join(' | ');
+        const combosText = (payload.combos || []).map((combo) => combo.name).join(' | ');
+        const statuses = (payload.services || []).filter((service) => service.availability || service.evaluation)
+          .map((service) => `${service.name}: ${service.evaluation ? 'requiere evaluación' : 'sujeto a disponibilidad'}`).join(' | ');
+        addEstimateHidden('estimate_reference', payload.id);
+        addEstimateHidden('estimate_services', servicesText);
+        addEstimateHidden('estimate_combos', combosText);
+        addEstimateHidden('estimate_platform', payload.platform || '');
+        addEstimateHidden('estimate_one_time', payload.oneTimeArs === null ? '' : formatContactMoney(payload.oneTimeArs, 'ARS'));
+        addEstimateHidden('estimate_monthly', payload.monthlyArs === null ? '' : `${formatContactMoney(payload.monthlyArs, 'ARS')} / mes`);
+        addEstimateHidden('estimate_special_status', statuses);
+      }
+
       let isSubmitting = false;
 
       function closeMenu() {
@@ -395,6 +499,7 @@ a.contact-visual-card:hover { transform: translateY(-3px); border-color: var(--c
       document.querySelectorAll('.contact-topic-list a').forEach((link) => {
         link.addEventListener('click', () => selectService(link.dataset.service));
       });
+      loadEstimateContext();
       const requestedInterest = new URLSearchParams(window.location.search).get('interes');
       if (requestedInterest) {
         selectService(interestMap[requestedInterest.toLowerCase()] || requestedInterest);
