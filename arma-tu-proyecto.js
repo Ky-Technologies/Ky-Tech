@@ -558,9 +558,17 @@
     elements.initialChoices.hidden = !isInitial;
     elements.dynamicSteps.replaceChildren();
     elements.previous.disabled = stepIndex === 0;
+    const currentStep = steps[stepIndex];
+    const nextStep = steps[stepIndex + 1];
+    const selectedCategorySteps = steps.filter((step) => step.type === 'category');
+    const currentCategoryPosition = currentStep?.type === 'category'
+      ? selectedCategorySteps.findIndex((step) => step.need === currentStep.need) + 1
+      : 0;
     elements.next.textContent = stepIndex > 0 && stepIndex === steps.length - 1
       ? 'Ver mi estimación'
-      : 'Continuar';
+      : nextStep?.type === 'category'
+        ? `Continuar con ${NEED_LABELS[nextStep.need]}`
+        : 'Continuar';
     const arrow = document.createElement('span');
     arrow.setAttribute('aria-hidden', 'true');
     arrow.textContent = ' →';
@@ -576,7 +584,19 @@
 
     if (!isInitial) {
       const step = steps[stepIndex];
-      if (step.type === 'category') renderCategoryStep(step.need);
+      if (step.type === 'category') {
+        renderCategoryStep(step.need);
+        if (selectedCategorySteps.length > 1) {
+          const fieldset = elements.dynamicSteps.querySelector('fieldset');
+          const legend = fieldset?.querySelector('legend');
+          if (fieldset && legend) {
+            const context = document.createElement('p');
+            context.className = 'project-builder-step-context';
+            context.textContent = `${NEED_LABELS[step.need]} · ${currentCategoryPosition} de ${selectedCategorySteps.length} necesidades seleccionadas`;
+            fieldset.insertBefore(context, legend);
+          }
+        }
+      }
       if (step.type === 'diagnostic') renderDiagnosticStep(step.question);
       if (focus) {
         const target = elements.dynamicSteps.querySelector('legend, label, select');
