@@ -708,11 +708,19 @@
     if(view.badge){const badge=document.createElement('span'); badge.className='project-builder-service-badge'; badge.textContent=view.badge; top.append(badge);} content.append(top);
     const summary=document.createElement('span'); summary.className='project-builder-service-summary'; summary.textContent=service.description||view.summary||''; if(summary.textContent) content.append(summary);
     if(view.features?.length){const features=document.createElement('span'); features.className='project-builder-service-features'; view.features.forEach((text)=>{const item=document.createElement('span'); item.textContent=text; features.append(item);}); content.append(features);}
+    const guideLink=document.createElement('a');
+    guideLink.className='project-builder-service-guide';
+    guideLink.href=`assets/catalogo/guias/${service.id}.docx`;
+    guideLink.download=`${service.id}.docx`;
+    guideLink.setAttribute('aria-label',`Guía del servicio ${service.name}`);
+    guideLink.innerHTML='<span aria-hidden="true">▣</span> Guía del servicio';
+    guideLink.addEventListener('click',(event)=>{event.stopPropagation();});
+    guideLink.addEventListener('keydown',(event)=>{event.stopPropagation();});
     const footer=document.createElement('span'); footer.className='project-builder-service-card-footer';
     const price=amountFor(service); const priceText=price===null?'Sin precio publicado':formatMoney(price,currentCurrency);
     const priceEl=document.createElement('span'); priceEl.className='project-builder-service-price'; priceEl.textContent=isMonthly(service)?`${priceText} / mes`:priceText;
     const status=document.createElement('span'); status.className='project-builder-service-status'; status.textContent=isEvaluationOnly(service)?'Requiere evaluación':isAvailability(service)?'Sujeto a disponibilidad':'Disponible'; if(isAvailability(service))status.classList.add('is-warning'); if(isEvaluationOnly(service))status.classList.add('is-evaluation');
-    footer.append(priceEl,status); content.append(footer); label.append(input,content); return label;
+    footer.append(priceEl,status); content.append(footer); label.append(input,content,guideLink); return label;
   }
 
   function renderDiagnosticStep(question) {
