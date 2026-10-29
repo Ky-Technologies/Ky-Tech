@@ -9,7 +9,8 @@
     organization: ['Productividad'],
     data: ['Datos'],
     'artificial-intelligence': ['IA'],
-    support: ['Soporte']
+    support: ['Soporte'],
+    'digital-growth': ['Crecimiento Digital']
   };
   const NEED_LABELS = {
     presence: 'Presencia digital',
@@ -17,6 +18,7 @@
     data: 'Datos y reportes',
     'artificial-intelligence': 'Inteligencia artificial',
     support: 'Soporte',
+    'digital-growth': 'Crecimiento Digital',
     guidance: 'Diagnóstico guiado'
   };
   const PRODUCTIVITY_PLATFORMS = [
@@ -155,8 +157,22 @@
         "3 · Acompañamiento continuo",
         "Soporte recurrente."
       ]
-    ]
+    ],
+    "digital-growth": [["digital-growth", "Crecimiento Digital", "La tecnología ya está disponible. Aprendé a aprovecharla para crecer."]]
   };
+  const DIGITAL_GROWTH_MODALITIES = {'CD-01':['individual'],'CD-02':['individual','workshop','empresa'],'CD-03':['individual','workshop'],'CD-04':['individual','workshop','empresa'],'CD-05':['empresa'],'CD-06':['individual','workshop'],'CD-07':['individual','workshop','empresa'],'CD-08':['individual','workshop'],'CD-09':['individual','workshop','empresa']};
+  const DIGITAL_GROWTH_PRICE_FACTORS = {
+    'CD-01': { individual: 1 },
+    'CD-02': { individual: 1, workshop: 0.5, empresa: 3 },
+    'CD-03': { individual: 1, workshop: 35000 / 75000 },
+    'CD-04': { individual: 1, workshop: 0.5, empresa: 3.6 },
+    'CD-05': { empresa: 1 },
+    'CD-06': { individual: 1, workshop: 0.5 },
+    'CD-07': { individual: 1, workshop: 0.5, empresa: 3.4 },
+    'CD-08': { individual: 1, workshop: 0.5 },
+    'CD-09': { individual: 1, workshop: null, empresa: 2.4 }
+  };
+  const DIGITAL_GROWTH_PRESENTIAL_FACTOR = 1.85;
   const DIAGNOSTIC_QUESTIONS = [
     {
       key: 'improve',
@@ -244,9 +260,10 @@
     organization: '¿Qué querés organizar en tu empresa?',
     data: '¿Qué necesitás mejorar de tus datos y reportes?',
     'artificial-intelligence': '¿Cómo querés incorporar inteligencia artificial?',
-    support: '¿Qué tipo de soporte necesitás?'
+    support: '¿Qué tipo de soporte necesitás?',
+    'digital-growth': '¿Qué querés aprender para aprovechar mejor la tecnología?'
   };
-  const categoryOrder = ['presence', 'organization', 'data', 'artificial-intelligence', 'support'];
+  const categoryOrder = ['presence', 'organization', 'data', 'artificial-intelligence', 'support', 'digital-growth'];
   let catalog = [];
   let catalogLoaded = false;
   let estimate = createEstimate();
@@ -689,6 +706,7 @@
     legend.textContent = categoryPrompts[need];
     fieldset.append(legend);
     if (need === 'organization') fieldset.append(createProductivityPlatformSelector());
+    if (need === 'digital-growth') { renderDigitalGrowthOptions(fieldset); elements.dynamicSteps.append(fieldset); return; }
     const categories = CATEGORY_BY_NEED[need];
     const services = catalogLoaded ? catalog.filter((service) => categories.includes(service.category) && !service.id.startsWith('COM-')) : [];
     if (!services.length) {
@@ -713,6 +731,48 @@
     elements.dynamicSteps.append(fieldset);
   }
 
+  function renderDigitalGrowthOptions(fieldset) {
+    const grid = document.createElement('div'); grid.className = 'project-builder-service-grid';
+    const services = catalogLoaded ? catalog.filter((service) => service.category === 'Crecimiento Digital' && /^CD-0[1-9]$/.test(service.id)) : [];
+    services.forEach((service) => {
+      const label=document.createElement('label'); label.className='project-builder-service-card project-builder-service-card--cd-guide';
+      const input=document.createElement('input'); input.type='checkbox'; input.name='services'; input.value=service.id; input.checked=estimate.selectedServices.includes(service.id); input.dataset.serviceOption='';
+      const content=document.createElement('span'); content.className='project-builder-service-card-content';
+      const top=document.createElement('span'); top.className='project-builder-service-card-top';
+      const icon=document.createElement('span'); icon.className='project-builder-service-icon'; icon.setAttribute('aria-hidden','true'); icon.textContent='✦';
+      const name=document.createElement('strong'); name.textContent=service.name;
+      top.append(icon,name);
+      const description=document.createElement('span'); description.className='project-builder-service-summary'; description.textContent=service.description;
+      const controls=document.createElement('span'); controls.className='project-builder-service-features';
+      const mode=document.createElement('select'); DIGITAL_GROWTH_MODALITIES[service.id].forEach(v=>{const o=document.createElement('option');o.value=v;o.textContent=v==='individual'?'Individual':v==='workshop'?'Workshop':'Empresa';mode.append(o);}); mode.value=estimate.answers[`cdMode:${service.id}`]||DIGITAL_GROWTH_MODALITIES[service.id][0];
+      const count=document.createElement('select'); ['4','5','6','7','8','9','10','more'].forEach(v=>{const o=document.createElement('option');o.value=v;o.textContent=v==='more'?'Más de 10':v;count.append(o);}); count.value=estimate.answers[`cdCount:${service.id}`]||'4';
+      const delivery=document.createElement('select'); [['virtual','Virtual'],['presencial','Presencial']].forEach(([v,t])=>{const o=document.createElement('option');o.value=v;o.textContent=t;delivery.append(o);}); delivery.value=estimate.answers[`cdDelivery:${service.id}`]||'virtual';
+      const price=document.createElement('span'); price.className='project-builder-service-price';
+      const baseArs=service.ars;
+      const baseUsd=service.usd;
+      const calculateTrainingPrice=(base,m,n,d,currency)=>{
+        if(base===null || base===undefined || !Number.isFinite(base)) return null;
+        const factor=DIGITAL_GROWTH_PRICE_FACTORS[service.id]?.[m];
+        if(factor===null || factor===undefined) return null;
+        let total=base*factor;
+        if(m==='workshop') total=n==='more'?null:total*Number(n);
+        if(total!==null && d==='presencial') total*=DIGITAL_GROWTH_PRESENTIAL_FACTOR;
+        if(total===null) return null;
+        return currency==='ARS' ? Math.round(total/1000)*1000 : Math.round(total*100)/100;
+      };
+      const update=()=>{const m=mode.value,n=count.value,d=delivery.value;estimate.answers[`cdMode:${service.id}`]=m;estimate.answers[`cdCount:${service.id}`]=n;estimate.answers[`cdDelivery:${service.id}`]=d;service.ars=calculateTrainingPrice(baseArs,m,n,d,'ARS');service.usd=calculateTrainingPrice(baseUsd,m,n,d,'USD');count.hidden=m!=='workshop';const shown=amountFor(service);price.textContent=shown===null?'Cotización especial':formatMoney(shown,currentCurrency);persistEstimate();if(input.checked)renderSolution();};
+      [mode,count,delivery].forEach(el=>el.addEventListener('change',update)); input.addEventListener('change',()=>{if(input.checked&&!estimate.selectedServices.includes(service.id))estimate.selectedServices.push(service.id);if(!input.checked)estimate.selectedServices=estimate.selectedServices.filter(id=>id!==service.id);update();renderSolution();});
+      const guideLink=document.createElement('a');
+      guideLink.className='project-builder-service-guide project-builder-service-guide--cd';
+      guideLink.href=`assets/catalogo/guias/${service.id}.pdf`;
+      guideLink.download=`${service.id}.pdf`;
+      guideLink.setAttribute('aria-label',`Descargar guía en PDF de ${service.name}`);
+      guideLink.innerHTML='<span aria-hidden="true">▣</span> Ver temario';
+      guideLink.addEventListener('click',(event)=>{event.stopPropagation();});
+      guideLink.addEventListener('keydown',(event)=>{event.stopPropagation();});
+      controls.append(mode,count,delivery); content.append(top,description,controls,price); label.append(input,content,guideLink); grid.append(label); update();
+    }); fieldset.append(grid);
+  }
   function createServiceOption(service) {
     const view = SERVICE_PRESENTATION[service.id] || {};
     const label = document.createElement('label');
@@ -732,8 +792,8 @@
     guideLink.className='project-builder-service-guide';
     guideLink.href=`assets/catalogo/guias/${service.id}.docx`;
     guideLink.download=`${service.id}.docx`;
-    guideLink.setAttribute('aria-label',`Guía del servicio ${service.name}`);
-    guideLink.innerHTML='<span aria-hidden="true">▣</span> Guía del servicio';
+    guideLink.setAttribute('aria-label',`Ver temario ${service.name}`);
+    guideLink.innerHTML='<span aria-hidden="true">▣</span> Ver temario';
     guideLink.addEventListener('click',(event)=>{event.stopPropagation();});
     guideLink.addEventListener('keydown',(event)=>{event.stopPropagation();});
     const footer=document.createElement('span'); footer.className='project-builder-service-card-footer';
@@ -1290,6 +1350,11 @@
     };
   }
 
+  function applyContextFromUrl() {
+    const cd = new URLSearchParams(window.location.search).get('cd');
+    if (!cd || !/^CD-0[1-9]$/.test(cd)) return;
+    estimate = createEstimate(); currentCurrency = 'ARS'; estimate.needs = ['digital-growth']; estimate.selectedServices = [cd]; estimate.completed = false; stepIndex = 1; persistEstimate();
+  }
   function prepareContactNavigation() {
     const link = document.querySelector('[data-continue-to-contact]');
     if (!link) return;
@@ -1324,6 +1389,7 @@
   document.querySelector('[data-edit-estimation]').addEventListener('click', editEstimate);
 
   restoreEstimate();
+  applyContextFromUrl();
   prepareContactNavigation();
   renderCurrencyButtons();
   const needsWereSaved = estimate.needs.length > 0;
